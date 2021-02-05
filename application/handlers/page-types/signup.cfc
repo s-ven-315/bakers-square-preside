@@ -19,7 +19,7 @@ component {
 
         if ( formData.password != formData.confirm_password ){
             validationResult.addError( fieldName="password", message="cms:error:password_not_same");
-            validationResutl.addError( fieldName="confirm_password", message="cms:error.password_not_same");
+            validationResult.addError( fieldName="confirm_password", message="cms:error.password_not_same");
         }
 
         if( websiteUserService.isExistingUser( email = formData.email ) ){

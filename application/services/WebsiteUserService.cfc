@@ -4,11 +4,13 @@
  */
 
 component {
-    
-    public any function init() {
-
-        return this;
-
+    /**
+	* @sitetreeService.inject SitetreeService
+    */
+    public any function init(
+        required any sitetreeService,
+    ) {
+        _setSitetreeService(arguments.sitetreeService);
     }
 
     public string function saveUser(
@@ -23,6 +25,16 @@ component {
             }
         );
 
+        if (len(newId)){
+            _getSiteTreeService().addPage(
+                title = username
+                , slug = username
+                , page_type = "user_profile"
+                , parent_page = "0C02D9B9-5BBF-4839-83FB4C54FEB2E2D4"
+            )
+          
+        }
+
         return newId;
     }
 
@@ -36,6 +48,14 @@ component {
         if (len(arguments.username)) filter.login_id = arguments.username;
 
         return $getPresideObject('website_user').dataExists( filter = filter );
+    }
+
+    private any function _getSiteTreeService() {
+        return _sitetreeService;
+    }
+
+    private void function _setSiteTreeService( required any sitetreeService ) {
+        _sitetreeService = arguments.sitetreeService
     }
 
 }
