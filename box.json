@@ -1,0 +1,14 @@
+{
+    "name":"BakersSquare.com",
+    "version":"1.0.0",
+    "author":"admin",
+    "slug":"bakerssquare",
+    "createPackageDirectory":false,
+    "private":true,
+    "dependencies":{
+        "presidecms":"^10.14.2+0008572"
+    },
+    "installPaths":{
+        "presidecms":"preside/"
+    }
+}
