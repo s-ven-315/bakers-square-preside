@@ -8,7 +8,7 @@
             , savedData		   = rc.formData ?: {}
         )#
         <input type="submit" value="Register" />
-        <a href="#event.buildLink()#">Already have an account? Login here</a>
+        <a href="#event.buildLink(page="login")#">Already have an account? Login here</a>
 
     </form>
 </cfoutput>
