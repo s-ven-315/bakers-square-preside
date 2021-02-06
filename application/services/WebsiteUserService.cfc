@@ -5,7 +5,7 @@
 
 component {
     /**
-	* @sitetreeService.inject SitetreeService
+    * @sitetreeService.inject SitetreeService
     */
     public any function init(
         required any sitetreeService,
@@ -24,16 +24,6 @@ component {
                 , display_name = arguments.username
             }
         );
-
-        if (len(newId)){
-            _getSiteTreeService().addPage(
-                title = username
-                , slug = username
-                , page_type = "user_profile"
-                , parent_page = "0C02D9B9-5BBF-4839-83FB4C54FEB2E2D4"
-            )
-          
-        }
 
         return newId;
     }

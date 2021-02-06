@@ -13,11 +13,13 @@ component {
     public function getUserProfile(
         required string display_name
     ){
-        var userProfile = $getPresideObject("website_user").selectData(
+        return $getPresideObject("website_user").selectData(
             selectFields = [
                 "website_user.display_name"
                 , "website_user.login_id"
+                , "website_user.id"
             ]
+            , filter = {"website_user.display_name" = arguments.display_name}
         )
     }
 }
