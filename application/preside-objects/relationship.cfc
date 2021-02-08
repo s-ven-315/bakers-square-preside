@@ -1,4 +1,9 @@
+/**
+ * @nolabel true
+ */
+
 component {
-    property name="start_date";
-    property name="end_date";
+    property name="follower" dbtype="varchar";
+    property name="following" dbtype="varchar";
+    property name="connected" dbtype="tinyint";
 }

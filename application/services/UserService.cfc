@@ -11,15 +11,76 @@ component {
     }
 
     public function getUserProfile(
-        required string display_name
+        required string user_id
     ){
         return $getPresideObject("website_user").selectData(
             selectFields = [
-                "website_user.display_name"
-                , "website_user.login_id"
-                , "website_user.id"
+                "display_name"
+                , "login_id"
+                , "id"
             ]
-            , filter = {"website_user.display_name" = arguments.display_name}
+            , filter = {"login_id" = arguments.user_id}
         )
     }
+
+    public function getRelationship(
+        required string login_user
+        , required string target_user
+    ){
+        return $getPresideObject("relationship").selectData(
+            selectFields = [
+                "connected"
+            ]
+            , filter = "follower = :follower and following = :following"
+            , filterParams = {
+                "follower" = arguments.login_user
+                , "following" = arguments.target_user
+            }
+        )
+    }
+
+    public function updateRelationship(
+        required string login_user
+        , required string target_user
+    ){
+        var relationship = getRelationship(login_user = arguments.login_user, target_user = arguments.target_user);
+        if (relationship.connected EQ ""){
+            // new follow
+            $getPresideObject("relationship").insertData(
+                data = {
+                    follower = arguments.login_user
+                    , following = arguments.target_user
+                    , connected = 1
+                }
+            )
+        } else {
+            // not following (to refollow)
+            if (relationship.connected EQ 0) {
+                $getPresideObject("relationship").updateData(
+                    data = {
+                        connected = 1
+                    }
+                    , filter = "follower = :follower and following = :following"
+                    , filterParams = {
+                        "follower" = arguments.login_user
+                        , "following" = arguments.target_user
+                    }
+                )
+            }
+            else if (relationship.connected EQ 1) {
+                // already follow (to unfollow)
+                $getPresideObject("relationship").updateData(
+                    data = {
+                        connected = 0
+                    }
+                    , filter = "follower = :follower and following = :following"
+                    , filterParams = {
+                        "follower" = arguments.login_user
+                        , "following" = arguments.target_user
+                    }
+                )
+            }
+        }
+    }
+    
 }

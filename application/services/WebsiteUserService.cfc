@@ -48,4 +48,16 @@ component {
         _sitetreeService = arguments.sitetreeService
     }
 
+    public function updateUserDetail(
+        required string display_name
+        , required string login_id
+    ){
+        return $getPresideObject('website_user').updateData(
+            data = {
+                display_name = arguments.display_name
+                
+            }
+            , filter = {id = arguments.login_id}
+        )
+    }
 }
