@@ -11,7 +11,7 @@ component {
     }
 
     public function getUserProfile(
-        required string user_id
+        required string target_user
     ){
         return $getPresideObject("website_user").selectData(
             selectFields = [
@@ -19,7 +19,33 @@ component {
                 , "login_id"
                 , "id"
             ]
-            , filter = {"login_id" = arguments.user_id}
+            , filter = {"login_id" = arguments.target_user}
+        )
+    }
+
+    public function getFollower(
+        required string target_user
+    ){
+        return $getPresideObject("relationship").selectData(
+            selectFields = ["follower"]
+            , filter = "following = :following and connected = :connected"
+            , filterParams = {
+                "following" = arguments.target_user
+                , "connected" = 1
+            }
+        )
+    }
+
+    public function getFollowing(
+        required string target_user
+    ){
+        return $getPresideObject("relationship").selectData(
+            selectFields = ["following"]
+            , filter = "follower = :follower and connected = :connected"
+            , filterParams = {
+                "follower" = arguments.target_user
+                , "connected" = 1
+            }
         )
     }
 
@@ -28,9 +54,7 @@ component {
         , required string target_user
     ){
         return $getPresideObject("relationship").selectData(
-            selectFields = [
-                "connected"
-            ]
+            selectFields = ["connected"]
             , filter = "follower = :follower and following = :following"
             , filterParams = {
                 "follower" = arguments.login_user

@@ -2,6 +2,8 @@
     userProfile = args.userProfile ?: QueryNew("");
     currentUserId = args.currentUserId;
     relationship = args.connected ?: QueryNew("");
+    follower = args.follower ?: QueryNew("");
+    following = args.following ?: QueryNew("");
 </cfscript>
 
 <cfoutput>
@@ -50,4 +52,8 @@
             </cfif>
         </div>
     </cfif>
+    <div class="follow-section">
+        <p>#follower.recordCount# Follower</p>
+        <p>#following.recordCount# Following</p>
+    </div>
 </cfoutput>

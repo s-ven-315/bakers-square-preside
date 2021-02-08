@@ -7,13 +7,14 @@ component {
         args.currentUserId = websiteLoginService.getLoggedInUserDetails().login_id ?: "";
         var targetUserId = event.getPageProperty("title")
         args.userProfile = userService.getUserProfile(
-            user_id = targetUserId
+            target_user = targetUserId
         )
         args.connected = userService.getRelationship(
             login_user = args.currentUserId
             , target_user = targetUserId
         )
-
+        args.follower = userService.getFollower(target_user = targetUserId);
+        args.following = userService.getFollowing(target_user=targetUserId);
         return renderView(
             view = 'page-types/user_profile/index'
             , presideObject = 'user_profile'
@@ -34,7 +35,7 @@ component {
         websiteUserService.updateUserDetail( argumentCollection = userData );
 
         setNextEvent(
-			url= event.buildLink(page="user_profile")
+			url= event.buildLink(page="homepage")
 		);
     }
 
@@ -48,7 +49,7 @@ component {
         );
 
         setNextEvent(
-			url= event.buildLink(page="#currentUserId#")
+			url= event.buildLink(page="homepage")
 		);
 
     }
