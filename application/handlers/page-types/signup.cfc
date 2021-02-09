@@ -2,6 +2,7 @@ component {
 
     property name="websiteUserService" inject="WebsiteUserService";
     property name="websiteLoginService" inject="websiteLoginService";
+    property name="siteTreeService" inject="siteTreeService";
 
     private function index(event, rc, prc, args={} ){
         return renderView(
@@ -19,7 +20,7 @@ component {
 
         if ( formData.password != formData.confirm_password ){
             validationResult.addError( fieldName="password", message="cms:error:password_not_same");
-            validationResutl.addError( fieldName="confirm_password", message="cms:error.password_not_same");
+            validationResult.addError( fieldName="confirm_password", message="cms:error.password_not_same");
         }
 
         if( websiteUserService.isExistingUser( email = formData.email ) ){
@@ -41,10 +42,17 @@ component {
             )
         } else {
             try {
+                var pageId = siteTreeService.addPage(
+                    title = formData.username
+                , slug = formData.username
+                , page_type = "user_profile"
+                , parent_page = "0C02D9B9-5BBF-4839-83FB4C54FEB2E2D4"
+                );
+
                 var websiteUserData = {
                     username = formData.username
                   , email = formData.email
-                  , display_name = formData.username
+                  , pageId = pageId
                 }
 
                 var userId = websiteUserService.saveUser( argumentCollection = websiteUserData );
@@ -52,7 +60,12 @@ component {
                 websiteLoginService.changePassword( 
                     password = formData.password
                     , userId = userId
-                )
+                );
+
+                websiteLoginService.login(
+                    loginId            = formData.username
+			        , password         = formData.password
+                );
             }catch(any e){
                 writeDump(e)
                 abort;
