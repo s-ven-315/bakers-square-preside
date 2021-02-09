@@ -7,7 +7,7 @@
 </cfscript>
 
 <cfoutput>
-    <cfif currentUserId EQ userProfile.login_id>
+    <cfif currentUserId EQ userProfile.id>
     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="##editProfileModal">
         Edit Profile
     </button>
@@ -20,7 +20,7 @@
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
-            <form action="#event.buildLink(linkTo="page-types.user_profile.edit")#" method="POST">
+            <form action="#event.buildLink(linkTo="page-types.user_profile.edit", queryString="pageId=#event.getCurrentPageId()#")#" method="POST">
                 <div class="modal-body">
                         <div class="form-group">
                             <input name="profileName" type="text" placeholder="New Profile Name">
@@ -35,23 +35,29 @@
         </div>
     </div>
     </cfif>
+    
     <cfif userProfile.recordCount>
         <div class="user-profile">
             <h3>#userProfile.display_name#</h3>
             <p>@#userProfile.login_id#</p>
-            <cfif currentUserId NEQ userProfile.login_id>
-              <form action="#event.buildLink(linkTo="page-types.user_profile.follow", queryString="userId=#event.getPageProperty("title")#")#" method="POST">
-                <button>
-                  <cfif relationship.recordCount EQ 0 || relationship.connected EQ 0>
-                    Follow
-                  <cfelse>
-                    Unfollow
-                  </cfif>
-                </button>
-              </form>
+            <cfif IsFeatureEnabled( "websiteusers" )>
+              <cfif IsLoggedIn()>
+                <cfif currentUserId NEQ userProfile.id>
+                  <form action="#event.buildLink(linkTo="page-types.user_profile.follow", queryString="userId=#event.getPageProperty("title")#")#" method="POST">
+                    <button>
+                      <cfif relationship.recordCount EQ 0 || relationship.connected EQ 0>
+                        Follow
+                      <cfelse>
+                        Unfollow
+                      </cfif>
+                    </button>
+                  </form>
+                </cfif>
+              </cfif>
             </cfif>
         </div>
     </cfif>
+    
     <div class="follow-section">
         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="##followerModal">#follower.recordCount# Follower</button>
         <div class="modal fade" id="followerModal" tabindex="-1" role="dialog" aria-labelledby="followerModalLabel" aria-hidden="true">
@@ -68,7 +74,7 @@
                   <ul class="follower-list">
                     <cfloop query="follower">
                       <li class="follower-listitem">
-                      <p><a href="#event.buildLink(page="signup")#">#follower#</a></p>
+                      <p><a href="#event.buildLink(page="#follower.user_profile#")#">#follower.login_id#</a></p>
                       </li>
                     </cfloop>
                   </ul>
@@ -92,7 +98,7 @@
                   <ul class="following-list">
                     <cfloop query="following">
                       <li class="following-listitem">
-                      <p><a href="#event.buildLink(page="#following.following#")#">#following#</a></p>
+                      <p><a href="#event.buildLink(page="#following.user_profile#")#">#following.login_id#</a></p>
                       </li>
                     </cfloop>
                   </ul>
@@ -101,7 +107,5 @@
             </div>
           </div>
         </div>
-    </div>
-    <a href="#event.buildLink(page="venven77")#">Venven77</a>
+      </div>
 </cfoutput>
-<cfdump var=#userProfile.user_id#>

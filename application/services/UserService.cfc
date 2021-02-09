@@ -17,7 +17,8 @@ component {
             selectFields = [
                 "display_name"
                 , "login_id"
-                , "id"
+                , "website_user.id as id"
+                , "user_profile.id as profile"
             ]
             , filter = {"login_id" = arguments.target_user}
         )
@@ -27,7 +28,7 @@ component {
         required string target_user
     ){
         return $getPresideObject("relationship").selectData(
-            selectFields = ["follower"]
+            selectFields = ["follower.login_id", "follower.user_profile"]
             , filter = "following = :following and connected = :connected"
             , filterParams = {
                 "following" = arguments.target_user
@@ -40,7 +41,7 @@ component {
         required string target_user
     ){
         return $getPresideObject("relationship").selectData(
-            selectFields = ["following"]
+            selectFields = ["following.login_id", "following.user_profile"]
             , filter = "follower = :follower and connected = :connected"
             , filterParams = {
                 "follower" = arguments.target_user

@@ -16,12 +16,14 @@ component {
     public string function saveUser(
         required string username
         , required string email
+        , required string pageId
     ) {
         var newId = $getPresideObject('website_user').insertData(
             data = {
                 login_id = arguments.username
                 , email_address = arguments.email
                 , display_name = arguments.username
+                , user_profile = arguments.pageId
             }
         );
 
@@ -40,6 +42,19 @@ component {
         return $getPresideObject('website_user').dataExists( filter = filter );
     }
 
+    public function updateUserDetail(
+        required string display_name
+        , required string id
+    ){
+        return $getPresideObject('website_user').updateData(
+            data = {
+                display_name = arguments.display_name
+                
+            }
+            , filter = {id = arguments.id}
+        )
+    }
+
     private any function _getSiteTreeService() {
         return _sitetreeService;
     }
@@ -48,16 +63,5 @@ component {
         _sitetreeService = arguments.sitetreeService
     }
 
-    public function updateUserDetail(
-        required string display_name
-        , required string login_id
-    ){
-        return $getPresideObject('website_user').updateData(
-            data = {
-                display_name = arguments.display_name
-                
-            }
-            , filter = {id = arguments.login_id}
-        )
-    }
+    
 }
