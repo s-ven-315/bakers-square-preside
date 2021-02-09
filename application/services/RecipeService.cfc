@@ -26,8 +26,9 @@ component {
             , filter = {id = arguments.id}
         )
     }
-    public function updateDetail(
+    public function createRecipe(
         required string owner
+        , required string name
         , required serving
         , required prepare_time
         , required cooking_time
@@ -35,12 +36,42 @@ component {
     ){
         return $getPresideObject('recipe').updateData(
             data = {
-                owner = arguments.owner
+                name = arguments.name
+                , owner = arguments.owner
                 , serving = arguments.serving
                 , prepare_time = arguments.prepare_time
                 , cooking_time = arguments.cooking_time
             }
             , filter = { id = arguments.id }
         )
+    }
+
+    public function updateDetail(
+        require string name
+        , required serving
+        , required prepare_time
+        , required cooking_time
+        , required string id
+    ){
+        return $getPresideObject('recipe').updateData(
+            data = {
+                name = arguments.name
+                , serving = arguments.serving
+                , prepare_time = arguments.prepare_time
+                , cooking_time = arguments.cooking_time
+            }
+            , filter = {id = arguments.id}
+        )
+    }
+
+    public function isExisting(
+        required string user_id
+        , required string name
+    ){
+        var filter = {
+            owner = arguments.user_id
+            , name = arguments.name
+        }
+        return $getPresideObject('recipe').dataExists(filter=filter);
     }
 }

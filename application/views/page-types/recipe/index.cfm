@@ -3,6 +3,7 @@
 </cfscript>
 <cfoutput>
     <h2>#recipeDetail.title#</h2>
+    #renderView(view = 'page-types/recipe/edit_detail')#
     <div class="recipe-owner-detail">
         <button><a href="#event.buildLink(page="#recipeDetail.owner_profile#")#">By #recipeDetail.owner_name# @#recipeDetail.owner_username#</a></button>
     </div>
