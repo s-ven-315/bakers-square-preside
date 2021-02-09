@@ -39,7 +39,7 @@ component extends="preside.system.config.Config" {
 	}
 
 	private void function _setupCommonSettings() {
-		settings.preside_admin_path = "bakerssquare_admin";
+		settings.preside_admin_path = "admin";
 		settings.system_users       = "sysadmin";
 		settings.default_locale     = "en";
 		settings.default_log_name   = "bakerssquare";
