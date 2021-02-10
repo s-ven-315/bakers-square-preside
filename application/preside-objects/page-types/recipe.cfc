@@ -10,4 +10,6 @@ component {
     property name="serving" dbtype="integer";
     property name="prepare_time" dbtype="integer";
     property name="cooking_time" dbtype="integer";
+    property name="steps" dbtype="longtext";
+    property name="ingredients" dbtype="longtext";
 }

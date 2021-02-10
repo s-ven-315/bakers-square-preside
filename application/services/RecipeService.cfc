@@ -22,10 +22,34 @@ component {
                 , 'owner.user_profile as owner_profile'
                 , 'owner.display_name as owner_name'
                 , 'owner.login_id as owner_username'
+                , 'steps'
+                , 'ingredients'
             ]
             , filter = {id = arguments.id}
         )
     }
+    public function getDetailByOwner(
+        required string owner_id
+    ){
+        return $getPresideObject('recipe').selectData(
+            selectFields = [
+                'page.title'
+                , 'id'
+                , 'serving'
+                , 'prepare_time'
+                , 'cooking_time'
+                , 'name'
+                , 'owner.id as owner_id'
+                , 'owner.user_profile as owner_profile'
+                , 'owner.display_name as owner_name'
+                , 'owner.login_id as owner_username'
+                , 'steps'
+                , 'ingredients'
+            ]
+            , filter = {owner = arguments.owner_id}
+        )
+    }
+
     public function createRecipe(
         required string owner
         , required string name
@@ -64,6 +88,7 @@ component {
         )
     }
 
+    // check is the recipe exist, one user cannot have 2 recipes with same name
     public function isExisting(
         required string user_id
         , required string name
@@ -73,5 +98,30 @@ component {
             , name = arguments.name
         }
         return $getPresideObject('recipe').dataExists(filter=filter);
+    }
+
+    // update steps
+    public function updateSteps(
+        required string id
+        , required steps
+    ){
+        return $getPresideObject('recipe').updateData(
+            data = {
+                steps = arguments.steps
+            }
+            , filter = { id = arguments.id}
+        )
+    }
+    // update ingredients
+    public function updateIngr(
+        required string id
+        , required ingr
+    ){
+        return $getPresideObject('recipe').updateData(
+            data = {
+                ingredients = arguments.ingr
+            }
+            , filter = { id = arguments.id}
+        )
     }
 }

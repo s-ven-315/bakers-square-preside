@@ -2,6 +2,7 @@
     userProfile = args.userProfile ?: QueryNew("");
     currentUserId = args.currentUserId;
     relationship = args.connected ?: QueryNew("");
+    recipe = args.recipe ?: QueryNew("");
 </cfscript>
 
 <cfoutput>
@@ -17,7 +18,8 @@
             <cfif IsFeatureEnabled( "websiteusers" )>
               <cfif IsLoggedIn()>
                 <cfif currentUserId NEQ userProfile.id>
-                  <form action="#event.buildLink(linkTo="page-types.user_profile.follow", queryString="userId=#event.getPageProperty("title")#")#" method="POST">
+                  <form action="#event.buildLink(linkTo="page-types.user_profile.follow")#" method="POST">
+                    <input type="hidden" name="userId" value="#userProfile.login_id#">
                     <button>
                       <cfif relationship.recordCount EQ 0 || relationship.connected EQ 0>
                         Follow
@@ -34,5 +36,12 @@
     
     <div class="follow-section">
       #renderView(view = 'page-types/user_profile/relationship_list', args=args)#
+    </div>
+    <div class="recipe-list">
+      <cfloop query=#recipe#>
+        <li class="recipe-list">
+					<h2><a href="#event.buildLink(page=id)#">#name#</a></h2>
+				</li>
+      </cfloop>
     </div>
 </cfoutput>

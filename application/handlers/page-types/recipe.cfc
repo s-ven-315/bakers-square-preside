@@ -22,7 +22,7 @@ component {
         
         if (recipeService.isExisting(user_id = currentUserId, name = rc.recipeName)) {
             setNextEvent(
-			    url= event.buildLink(page="#url.pageId#")
+			    url= event.buildLink(page="#rc.pageId#")
 		    );
         }
         
@@ -30,7 +30,7 @@ component {
             title = rc.recipeName
             , slug = lCase(REReplaceNoCase(rc.recipeName, "[^a-z0-9]", "-", "ALL"))
             , page_type = "recipe"
-            , parent_page = url.pageId
+            , parent_page = rc.pageId
         );
 
         var recipeDetail = {
@@ -57,24 +57,50 @@ component {
             , serving = rc.serving
             , prepare_time = rc.prepareTime
             , cooking_time = rc.cookTime
-            , id = url.pageId
+            , id = rc.id
         }
 
         if (recipeService.isExisting(user_id = currentUserId, name = rc.recipeName)) {
             setNextEvent(
-			    url= event.buildLink(page="#url.pageId#")
+			    url= event.buildLink(page="#rc.id#")
 		    );
         }
 
         recipeService.updateDetail( argumentCollection = recipeDetail);
 
         siteTreeService.editPage(
-            id = url.pageId
+            id = rc.id
             , title = rc.recipeName
             , slug = lCase(REReplaceNoCase(rc.recipeName, "[^a-z0-9]", "-", "ALL"))
         )
         setNextEvent(
-			url= event.buildLink(page="#url.pageId#")
+			url= event.buildLink(page="#rc.id#")
+		);
+    }
+    // update steps
+    public function step( event, rc, prc, args={} ){
+        var recipeSteps = {
+            steps = rc.steps
+            , id = rc.id
+        }
+
+        recipeService.updateSteps( argumentCollection = recipeSteps)
+
+        setNextEvent(
+			url= event.buildLink(page="#rc.id#")
+		);
+    }
+    // update ingredients
+    public function ingr( event, rc, prc, args={} ){
+        var recipeSteps = {
+            ingr = rc.ingr
+            , id = rc.id
+        }
+
+        recipeService.updateIngr( argumentCollection = recipeSteps)
+
+        setNextEvent(
+			url= event.buildLink(page="#rc.id#")
 		);
     }
 }

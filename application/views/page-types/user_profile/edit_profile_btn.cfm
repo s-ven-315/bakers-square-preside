@@ -11,9 +11,10 @@
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
-            <form action="#event.buildLink(linkTo="page-types.user_profile.edit", queryString="pageId=#event.getCurrentPageId()#")#" method="POST">
+            <form action="#event.buildLink(linkTo="page-types.user_profile.edit")#" method="POST">
                 <div class="modal-body">
                         <div class="form-group">
+                            <input type="hidden" name="pageId" value="#event.getCurrentPageId()#" />
                             <input name="profileName" type="text" placeholder="New Profile Name">
                         </div>
                 </div>
