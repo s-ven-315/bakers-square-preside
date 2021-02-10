@@ -38,7 +38,7 @@
                         </div>
                     </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary">Save</button>
+                    <button type="submit" class="btn btn-primary submit-btn-ingr">Save</button>
                     <button type="button" class="btn btn-secondary reset-btn-ingr" data-dismiss="modal">Cancel</button>
                 </div>
             </form>
@@ -48,7 +48,7 @@
     <script type="text/javascript" language="JavaScript">
         var #ToScript(cfIngr, "jsIngr")#;
         let addBtnIngr = document.querySelector('.add-more-ingr');
-        var str = jsIngr;
+        var inputStr = jsIngr;
         addBtnIngr.addEventListener('click', function(){
             let input = document.querySelector('.ingr-input').value;
             let ingrUL = document.querySelector(".ingr-list-ul");
@@ -63,13 +63,18 @@
             node.innerHTML = input;
             div.appendChild(node);
             document.querySelector('.ingr-input').value = "" ;
-            str += ',' + input;
-            let submitThis = document.querySelector('.ingr-submit').value = str;
+            inputStr += ',' + input;
+            let submitThis = document.querySelector('.ingr-submit').value = inputStr;
         })
 
         let resetBtnIngr = document.querySelector('.reset-btn-ingr');
         resetBtnIngr.addEventListener('click', function(){
             window.location.reload()
+        })
+
+        let submitBtnIngr = document.querySelector('.submit-btn-ingr');
+        submitBtnIngr.addEventListener('click', function(){
+            document.querySelector('.ingr-submit').value = inputStr
         })
     </script>
 </cfoutput>

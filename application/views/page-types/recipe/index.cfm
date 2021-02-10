@@ -39,5 +39,9 @@
     </div>
     #renderView(view='page-types/recipe/like', args=args)#
     #renderView(view='page-types/recipe/comment', args=args)#
-    
+    <button>
+        <a href="#event.buildLink(page="session", queryString="recipeId=#args.recipeDetail.id#")#">
+            Start Baking
+        </a>
+    </button>
 </cfoutput>
