@@ -2,6 +2,7 @@
     recipeDetail = args.recipeDetail ?: QueryNew("");
     likedUser = args.getLikedUser?: QUeryNew("")
     liked = args.liked ?: QueryNew("");
+    comment = args.comment ?: QueryNew("");
 </cfscript>
 <cfoutput>
     <h2>#recipeDetail.title#</h2>
@@ -37,5 +38,6 @@
         #renderView(view='page-types/recipe/edit_ingr', args=args)#
     </div>
     #renderView(view='page-types/recipe/like', args=args)#
+    #renderView(view='page-types/recipe/comment', args=args)#
     
 </cfoutput>

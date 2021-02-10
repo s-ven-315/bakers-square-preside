@@ -199,4 +199,32 @@ component {
             }
         )
     }
+
+    public function getComment(
+        required string recipe
+    ){
+        return $getPresideObject('recipe_comment').selectData(
+            selectFields = [
+                'user'
+                , 'user.login_id'
+                , 'user.user_profile as profile'
+                , 'comment'
+            ]
+            , filter = {recipe = arguments.recipe}
+        )
+    }
+
+    public function newComment(
+        required string recipe
+        , required string user
+        , required string comment
+    ){
+        return $getPresideObject('recipe_comment').insertData(
+            data = {
+                recipe = arguments.recipe
+                , user = arguments.user
+                , comment = arguments.comment
+            }
+        )
+    }
 }

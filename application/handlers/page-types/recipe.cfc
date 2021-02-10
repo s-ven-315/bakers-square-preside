@@ -5,6 +5,7 @@ component {
     property name="recipeService" inject="RecipeService";
 
     private function index(event, rc, prc, args={} ){
+
         args.currentUserId = websiteLoginService.getLoggedInUserId() ?: "";
 
         args.recipeDetail = recipeService.getDetail(
@@ -15,6 +16,9 @@ component {
             , recipe = args.recipeDetail.id
         )
         args.likedUser = recipeService.getLikedUser(recipe=args.recipeDetail.id)
+
+        args.comment = recipeService.getComment(recipe=args.recipeDetail.id)
+
         return renderView(
             view = 'page-types/recipe/index'
             , presideObject = 'recipe'
@@ -119,10 +123,24 @@ component {
             , recipe = rc.recipeId
         }
 
-        recipeService.updateLike( 
-            login_user = currentUserId
-            , recipe = rc.recipeId
+        recipeService.updateLike( argumentCollection = recipeLike )
+
+        setNextEvent(
+            url = event.buildLink( page="#rc.pageId#" )
         )
+    }
+
+    // comment on a recipe
+    public function comment( event, rc, prc, args={} ){
+        var currentUserId = websiteLoginService.getLoggedInUserId() ?: "";
+
+        var newComment = {
+            user = currentUserId
+            , recipe = rc.recipe
+            , comment = rc.comment
+        }
+
+        recipeService.newComment(argumentCollection = newComment)
 
         setNextEvent(
             url = event.buildLink( page="#rc.pageId#" )
