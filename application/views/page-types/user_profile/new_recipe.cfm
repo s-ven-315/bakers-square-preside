@@ -13,13 +13,17 @@
               </div>
               <form action="#event.buildLink(linkTo="page-types.recipe.create")#" method="POST">
                   <div class="modal-body">
-                          <div class="form-group">
-                              <input type="hidden" name="pageId" value="#event.getCurrentPageId()#"/>
-                              <input name="recipeName" type="text" placeholder="Recipe Name">
-                              <input name="serving" type="number" placeholder="Serving">
-                              <input name="prepareTime" type="number" placeholder="Preparation Time">
-                              <input name="cookTime" type="number" placeholder="Cooking Time">
-                          </div>
+                    <div class="form-group">
+                      <input type="hidden" name="pageId" value="#event.getCurrentPageId()#"/>
+                      <label for="recipeName">Recipe Name</label>
+                      <input name="recipeName" type="text" placeholder="Recipe Name">
+                      <label for="serving">Serving</label>
+                      <input name="serving" type="number" placeholder="Serving">
+                      <label for="prepareTime">Preparation Time</label>
+                      <input name="prepareTime" type="number" placeholder="Preparation Time">
+                      <label for="cookTime">Cooking Time</label>
+                      <input name="cookTime" type="number" placeholder="Cooking Time">
+                    </div>
                   </div>
                   <div class="modal-footer">
                       <button type="submit" class="btn btn-primary">Create</button>
