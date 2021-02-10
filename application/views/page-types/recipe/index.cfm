@@ -1,5 +1,7 @@
 <cfscript>
-    recipeDetail = args.recipeDetail ?: QueryNew("")
+    recipeDetail = args.recipeDetail ?: QueryNew("");
+    likedUser = args.getLikedUser?: QUeryNew("")
+    liked = args.liked ?: QueryNew("");
 </cfscript>
 <cfoutput>
     <h2>#recipeDetail.title#</h2>
@@ -34,4 +36,6 @@
         </ul>
         #renderView(view='page-types/recipe/edit_ingr', args=args)#
     </div>
+    #renderView(view='page-types/recipe/like', args=args)#
+    
 </cfoutput>

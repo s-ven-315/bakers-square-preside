@@ -5,10 +5,16 @@ component {
     property name="recipeService" inject="RecipeService";
 
     private function index(event, rc, prc, args={} ){
+        args.currentUserId = websiteLoginService.getLoggedInUserId() ?: "";
+
         args.recipeDetail = recipeService.getDetail(
             id = event.getCurrentPageId()
         )
-
+        args.liked = recipeService.getLike(
+            login_user = args.currentUserId
+            , recipe = args.recipeDetail.id
+        )
+        args.likedUser = recipeService.getLikedUser(recipe=args.recipeDetail.id)
         return renderView(
             view = 'page-types/recipe/index'
             , presideObject = 'recipe'
@@ -102,5 +108,24 @@ component {
         setNextEvent(
 			url= event.buildLink(page="#rc.id#")
 		);
+    }
+
+    // like recipe
+    public function like( event, rc, prc, args={} ){
+        var currentUserId = websiteLoginService.getLoggedInUserId() ?: "";
+
+        var recipeLike = {
+            login_user = currentUserId
+            , recipe = rc.recipeId
+        }
+
+        recipeService.updateLike( 
+            login_user = currentUserId
+            , recipe = rc.recipeId
+        )
+
+        setNextEvent(
+            url = event.buildLink( page="#rc.pageId#" )
+        )
     }
 }

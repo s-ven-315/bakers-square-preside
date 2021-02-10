@@ -15,6 +15,7 @@ component {
         return $getPresideObject('recipe').selectData(
             selectFields = [
                 'page.title'
+                , "id"
                 , 'serving'
                 , 'prepare_time'
                 , 'cooking_time'
@@ -122,6 +123,80 @@ component {
                 ingredients = arguments.ingr
             }
             , filter = { id = arguments.id}
+        )
+    }
+    // get liked
+    public function getLike(
+        required string login_user
+        , required string recipe
+    ){
+        return $getPresideObject("recipe_like").selectData(
+            selectFields = ["liked"]
+            , filter = "user = :user and recipe = :recipe"
+            , filterParams = {
+                "user" = arguments.login_user
+                , "recipe" = arguments.recipe
+            }
+        )
+    }
+
+    public function updateLike(
+        required string login_user
+        , required string recipe
+    ){
+        var relationship = getLike(login_user = arguments.login_user, recipe = arguments.recipe);
+        if (relationship.liked EQ ""){
+            // new like
+            $getPresideObject("recipe_like").insertData(
+                data = {
+                    user = arguments.login_user
+                    , recipe = arguments.recipe
+                    , liked = 1
+                }
+            )
+        } else {
+            // re-like
+            if (relationship.liked EQ 0) {
+                $getPresideObject("recipe_like").updateData(
+                    data = {
+                        liked = 1
+                    }
+                    , filter = "user = :user and recipe = :recipe"
+                    , filterParams = {
+                        "user" = arguments.login_user
+                        , "recipe" = arguments.recipe
+                    }
+                )
+            }
+            else if (relationship.liked EQ 1) {
+                // unlike
+                $getPresideObject("recipe_like").updateData(
+                    data = {
+                        liked = 0
+                    }
+                    , filter = "user = :user and recipe = :recipe"
+                    , filterParams = {
+                        "user" = arguments.login_user
+                        , "recipe" = arguments.recipe
+                    }
+                )
+            }
+        }
+    }
+
+    public function getLikedUser(
+        required string recipe
+    ){
+        return $getPresideObject('recipe_like').selectData(
+            selectFields = [
+                'user'
+                , 'user.login_id'
+                , 'user.user_profile as profile'
+            ]
+            , filter = {
+                recipe = arguments.recipe
+                , liked = 1
+            }
         )
     }
 }
