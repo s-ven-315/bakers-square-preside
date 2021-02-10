@@ -200,6 +200,22 @@ component {
         )
     }
 
+    public function getLikedRecipe(
+        required string user
+    ){
+        return $getPresideObject('recipe_like').selectData(
+            selectFields = [
+                'recipe'
+                , 'recipe.name'
+                , 'recipe$owner.display_name as owner_name'
+            ]
+            , filter = {
+                user = arguments.user
+                , liked = 1
+            }
+        )
+    }
+    
     public function getComment(
         required string recipe
     ){
@@ -226,5 +242,19 @@ component {
                 , comment = arguments.comment
             }
         )
+    }
+
+    public function deleteRecipe(
+        required string id
+    ){
+        var deleteLike = $getPresideObject('recipe_like').deleteData(
+            filter = {recipe = arguments.id}
+        )
+        if (deleteLike){
+            return $getPresideObject('recipe').deleteData(
+                filter = {id = arguments.id}
+            )
+        }
+        return 0;
     }
 }
