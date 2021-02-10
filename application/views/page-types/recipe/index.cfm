@@ -5,8 +5,15 @@
     comment = args.comment ?: QueryNew("");
 </cfscript>
 <cfoutput>
+    <cfif IsFeatureEnabled( "websiteusers" )>
+        <cfif IsLoggedIn()>
+            #renderView(view = 'page-types/recipe/delete', args=args)#
+            #renderView(view = 'page-types/recipe/edit_detail', args=args)#
+            #renderView(view = 'page-types/recipe/edit_step', args=args)#
+            #renderView(view = 'page-types/recipe/edit_ingr', args=args)#
+        </cfif>
+    </cfif>
     <h2>#recipeDetail.title#</h2>
-    #renderView(view = 'page-types/recipe/edit_detail')#
     <div class="recipe-owner-detail">
         <button><a href="#event.buildLink(page="#recipeDetail.owner_profile#")#">By #recipeDetail.owner_name# @#recipeDetail.owner_username#</a></button>
     </div>
@@ -24,7 +31,6 @@
                 </div>
             </cfloop>
         </ol>
-        #renderView(view='page-types/recipe/edit_step', args=args)#
     </div>
     <div class="recipe-ingredient-detail">
         <p>Recipe Ingredients:</p>
@@ -35,7 +41,6 @@
                 </div>
             </cfloop>
         </ul>
-        #renderView(view='page-types/recipe/edit_ingr', args=args)#
     </div>
     #renderView(view='page-types/recipe/like', args=args)#
     #renderView(view='page-types/recipe/comment', args=args)#

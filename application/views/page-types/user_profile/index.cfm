@@ -8,8 +8,8 @@
 
 <cfoutput>
     <cfif currentUserId EQ userProfile.id>
-      #renderView(view = 'page-types/user_profile/edit_profile_btn')#
-      #renderView(view = 'page-types/user_profile/new_recipe_btn')#
+      #renderView(view = 'page-types/user_profile/edit_profile')#
+      #renderView(view = 'page-types/user_profile/new_recipe')#
     </cfif>
     
     <cfif userProfile.recordCount>

@@ -15,10 +15,14 @@
                 <div class="modal-body">
                         <div class="form-group">
                           <input type="hidden" value=#event.getCurrentPageId()# name="id">
-                          <input name="recipeName" type="text" placeholder="Recipe Name">
-                          <input name="serving" type="number" placeholder="Serving">
-                          <input name="prepareTime" type="number" placeholder="Preparation Time">
-                          <input name="cookTime" type="number" placeholder="Cooking Time">
+                          <label for="recipeName">Recipe Name</label>
+                          <input name="recipeName" type="text" value="#args.recipeDetail.title#">
+                          <label for="serving">Serving</label>
+                          <input name="serving" type="number" value="#args.recipeDetail.serving#">
+                          <label for="prepareTime">Preparation Time</label>
+                          <input name="prepareTime" type="number" value="#args.recipeDetail.prepare_time#">
+                          <label for="cookTime">Cooking Time</label>
+                          <input name="cookTime" type="number" value="#args.recipeDetail.cooking_time#">
                         </div>
                 </div>
                 <div class="modal-footer">
