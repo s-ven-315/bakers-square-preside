@@ -17,7 +17,7 @@
             <ul class="liked-list">
               <cfloop query="#args.comment#">
                 <li class="liked-user">
-                <p><a href="#event.buildLink(page="#args.comment.user#")#">#args.comment.login_id#</a></p>
+                <p><a href="#event.buildLink(page="#args.comment.profile#")#">#args.comment.login_id#</a></p>
                 <p>#args.comment.comment#</p>
                 </li>
               </cfloop>

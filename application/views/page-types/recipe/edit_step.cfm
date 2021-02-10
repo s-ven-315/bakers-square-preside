@@ -38,7 +38,7 @@
                         </div>
                     </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary">Save</button>
+                    <button type="submit" class="btn btn-primary submit-btn">Save</button>
                     <button type="button" class="btn btn-secondary reset-btn" data-dismiss="modal">Cancel</button>
                 </div>
             </form>
@@ -70,6 +70,11 @@
         let resetBtn = document.querySelector('.reset-btn');
         resetBtn.addEventListener('click', function(){
             window.location.reload()
+        })
+
+        let submitBtn = document.querySelector('.submit-btn');
+        submitBtn.addEventListener('click', function(){
+            document.querySelector('.step-submit').value = str
         })
     </script>
 </cfoutput>

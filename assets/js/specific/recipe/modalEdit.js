@@ -11,7 +11,7 @@ $("#editIngrModal").on("click", ".delete-listitem", function(){
     $(this).parent().remove();
     var avoid = "," + text
     console.log(text, avoid)
-    str = str.replace(avoid.trim(), "");
-    $(".ingr-submit").val(str);
+    inputStr = inputStr.replace(avoid.trim(), "");
+    $(".ingr-submit").val(inputStr);
 })
 
