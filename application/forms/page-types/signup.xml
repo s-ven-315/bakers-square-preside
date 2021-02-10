@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form i18nBaseUri="page-types.signup:">
+	<tab id="signup">
+		<fieldset id="signup">
+			<field name="username" control="textinput"  required="true"/>
+			<field name="email" control="emailInput" required="true"/>
+			<field name="password" control="password" required="true"/>
+			<field name="confirm_password" control="password" required="true"/>
+		</fieldset>
+	</tab>
+</form>

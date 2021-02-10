@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form i18nBaseUri="page-types.user_profile:">
+	<tab id="main">
+		<fieldset id="main">
+		</fieldset>
+	</tab>
+</form>
