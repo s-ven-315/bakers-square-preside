@@ -3,6 +3,7 @@
     currentUserId = args.currentUserId;
     relationship = args.connected ?: QueryNew("");
     recipe = args.recipe ?: QueryNew("");
+    likedRecipe = args.likedRecipe ?: QueryNew("");
 </cfscript>
 
 <cfoutput>
@@ -37,11 +38,15 @@
     <div class="follow-section">
       #renderView(view = 'page-types/user_profile/relationship_list', args=args)#
     </div>
+    <h4>#userProfile.display_name#'s Recipes (#recipe.recordCount#)</h4>
     <div class="recipe-list">
       <cfloop query=#recipe#>
         <li class="recipe-list">
-					<h2><a href="#event.buildLink(page=id)#">#name#</a></h2>
+					<h5><a href="#event.buildLink(page=id)#">#name#</a></h5>
 				</li>
       </cfloop>
     </div>
+    <h4>#userProfile.display_name#'s Liked Recipes (#likedRecipe.recordCount#)</h4>
+
+    #renderViewlet(event='page-types.recipe.index')#
 </cfoutput>
