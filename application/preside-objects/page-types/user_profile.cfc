@@ -1,6 +1,6 @@
 /**
  * @allowedParentPageTypes homepage
- * @showInSiteTree false
+ * @allowedChildPageTypes recipe
  * @sitetreeGridFields page.title
  */
 
