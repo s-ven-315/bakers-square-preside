@@ -27,10 +27,10 @@
 	<body>
 		<div class="container">
 			<div class="header">
+				<h3 class="text-dark"><a href="/">Bakers' Square</a></h3>
 				<ul class="nav nav-pills pull-right">
 					#mainNav#
 				</ul>
-				<h3 class="text-dark"><a href="/">Bakers' Square</a></h3>
 			</div>
 
 			#body#

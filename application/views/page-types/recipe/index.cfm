@@ -6,12 +6,7 @@
     comment = args.comment ?: QueryNew("");
 </cfscript>
 <cfoutput>
-    <cfif IsFeatureEnabled( "websiteusers" )>
-        <cfif IsLoggedIn()>
-            #renderView(view = 'page-types/recipe/edit_step', args=args)#
-            #renderView(view = 'page-types/recipe/edit_ingr', args=args)#
-        </cfif>
-    </cfif>
+    
     <div class="recipe-container">
         <div class="recipe-owner-detail">
             <h2>#recipeDetail.title#</h2>
@@ -47,27 +42,45 @@
         </cfif>
         </div>
     </div>
-        <div class="recipe-step-detail">
-            <p>Recipe Steps:</p>
-            <ol>
-                <cfloop list="#recipeDetail.steps#" item="stepsitem" index="idx">
-                    <div style="display:flex">
-                        <li key="#idx#">#stepsitem#</li>
-                    </div>
-            </cfloop>
-        </ol>
+    <div class="recipe-detail-container">
+        <div class="recipe-step-ingr-container">
+            <h3>Steps & Ingredients</h3>
+            <div class="recipe-step-detail">
+                <p>Recipe Steps:</p>
+                <ol>
+                    <cfloop list="#recipeDetail.steps#" item="stepsitem" index="idx">
+                        <div style="display:flex">
+                            <li key="#idx#">#stepsitem#</li>
+                        </div>
+                    </cfloop>
+                </ol>
+                <cfif IsFeatureEnabled( "websiteusers" )>
+                    <cfif IsLoggedIn()>
+                        #renderView(view = 'page-types/recipe/edit_step', args=args)#
+                    </cfif>
+                </cfif>
+            </div>
+            <div class="recipe-ingredient-detail">
+                <p>Recipe Ingredients:</p>
+                <ul>
+                    <cfloop list="#recipeDetail.ingredients#" item="ingredient" index="idx">
+                        <div style="display:flex">
+                            <li key="#idx#">#ingredient#</li>
+                        </div>
+                    </cfloop>
+                </ul>
+                <cfif IsFeatureEnabled( "websiteusers" )>
+                    <cfif IsLoggedIn()>
+                        #renderView(view = 'page-types/recipe/edit_ingr', args=args)#
+                </cfif>
+            </cfif>
+            </div>
+        </div>
+        <div class="recipe-like-comment-container">
+            <h3>Likes & Comments</h3>
+            #renderView(view='page-types/recipe/like', args=args)#
+            #renderView(view='page-types/recipe/comment', args=args)#
+        </div>
     </div>
-    <div class="recipe-ingredient-detail">
-        <p>Recipe Ingredients:</p>
-        <ul>
-            <cfloop list="#recipeDetail.ingredients#" item="ingredient" index="idx">
-                <div style="display:flex">
-                    <li key="#idx#">#ingredient#</li>
-                </div>
-            </cfloop>
-        </ul>
-    </div>
-    #renderView(view='page-types/recipe/like', args=args)#
-    #renderView(view='page-types/recipe/comment', args=args)#
    
 </cfoutput>

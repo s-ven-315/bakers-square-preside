@@ -1,5 +1,5 @@
 <cfoutput>
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="##editDetailModal">
+    <button type="button" class="btn btn-primary edit-recipe-btn" data-toggle="modal" data-target="##editDetailModal">
         Edit
     </button>
     <div class="modal fade edit-recipe-form" id="editDetailModal" tabindex="-1" role="dialog" aria-labelledby="editDetailModalLabel" aria-hidden="true">

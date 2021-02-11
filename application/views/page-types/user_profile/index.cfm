@@ -8,9 +8,7 @@
 </cfscript>
 
 <cfoutput>
-    <cfif currentUserId EQ userProfile.id>
-      #renderView(view = 'page-types/user_profile/edit_profile')#
-    </cfif>
+    
     <div class="profile-page-container">
 
     <cfif userProfile.recordCount>
@@ -38,6 +36,9 @@
               </form>
             </cfif>
           </cfif>
+        </cfif>
+        <cfif currentUserId EQ userProfile.id>
+          #renderView(view = 'page-types/user_profile/edit_profile')#
         </cfif>
       </div>
     </cfif>

@@ -24,11 +24,11 @@ component {
         }
 
         if( websiteUserService.isExistingUser( email = formData.email ) ){
-			validationResult.addError( fieldName="email" , message="cms:error.email_exists");	
+			validationResult.addError( fieldName="email" , message="This email already exists. Please use another email.");	
 		}
 
 		if( websiteUserService.isExistingUser( username = formData.username ) ){
-			validationResult.addError( fieldName="username" , message="cms:error.email_exists ");	
+			validationResult.addError( fieldName="username" , message="This username already exists. Please use a different username.");	
         }
         
         if ( !validationResult.validated() ){

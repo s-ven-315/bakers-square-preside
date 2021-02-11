@@ -21,8 +21,10 @@
     border-radius: 5px;
     border: 1px solid rgba(0,0,0,.1);
     box-shadow: 4px 4px 4px rgba(0,0,0,.12);
+    margin-right: 40px;
+    height: 200px;
+    justify-content: space-around;
 }
-
 /* User profile (display name and login id) */
 .user-profile {
     display: flex;
@@ -41,18 +43,21 @@
     border: none;
     color: #c6783c;
 }
-.follow-container button:hover{
-    background-color: rgba(0,0,0,0.3);
-}
+
 .follow-container div:first-child{
     border-right: 1px solid #c6783c;
 }
 
 /* User recipe container */
+.user-recipe-outer-container {
+    width: 100%;
+}
 .user-recipe-inner-container {
     display: flex;
 }
-
+.user-recipe-inner-container>div {
+    flex: 1 1;
+}
 .user-recipe-inner-container h4{
     text-transform: uppercase;
 }

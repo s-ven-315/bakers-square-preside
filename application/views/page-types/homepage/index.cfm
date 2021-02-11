@@ -4,7 +4,7 @@
 <cfoutput>
 	<div class="jumbotron">
 		<h2>Get your chef hat on!</h2>
-		<button>Get Started</button>
+		<button class="homepage-signup"><a href="#event.buildLink( page="signup")#">Get Started</a></button>
 	</div>
 
 	#args.main_content#

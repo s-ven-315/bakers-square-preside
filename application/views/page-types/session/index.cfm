@@ -1,4 +1,5 @@
 <cfscript>
+    event.include("css-session");
     recipeDetail = args.recipeDetail ?: QueryNew("");
     var steps = []
     for (item in listToArray(recipeDetail.steps, ",")) { 
@@ -12,9 +13,11 @@
         <!-- Wrapper for slides -->
         <div class="carousel-inner" role="listbox">
             <cfloop index="i" from="1" to="#arrayLen(steps)#">
-                <div class="item <cfif i EQ 1>active</cfif>" style="height:300px">
-                    <p>Step #i# of #arrayLen(steps)#</p>
-                    <p>#steps[i]#</p>
+                <div class="item <cfif i EQ 1>active</cfif>">
+                    <div>
+                      <p>Step #i# of #arrayLen(steps)#</p>
+                      <p>#steps[i]#</p>
+                    </div>
                 </div>
             </cfloop>
         </div>
