@@ -20,7 +20,7 @@
                 <div class="ingr-list">
                     <ul class="ingr-list-ul list-group">
                         <cfloop list="#ingr#" item="ingrItem" index="idx">
-                            <div style="display:flex">
+                            <div>
                                 <button class="delete-listitem">Delete</button>
                                 <li key="#idx#" class="list-group-item">#ingrItem# </li>
                             </div>

@@ -146,4 +146,15 @@ component {
             url = event.buildLink( page="#rc.pageId#" )
         )
     }
+
+    // delete a recipe
+    public function delete( event, rc, prc, args={} ){
+        siteTreeService.trashPage(id = rc.pageId)
+
+        recipeService.deleteRecipe(id = rc.pageId)
+
+        setNextEvent(
+            url = event.buildLink( page="#rc.parentPageId#" )
+        )
+    }
 }

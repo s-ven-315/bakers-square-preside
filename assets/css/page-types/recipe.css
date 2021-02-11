@@ -1,0 +1,103 @@
+.recipe-container {
+    display: flex;
+    flex-direction: row;
+    border-radius: 5px;
+    border: 1px solid rgba(0,0,0,.1);
+    box-shadow: 4px 4px 4px rgba(0,0,0,.12);
+    min-height: 200px;
+    padding: 10px;
+    justify-content: space-between;
+}
+.recipe-owner-detail{
+    display: flex;
+    flex-direction: column;
+    margin: auto 0;
+}
+
+.recipe-action {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.recipe-action .recipe-like-btn{
+    width: 100%;
+}
+
+.recipe-owner-link {
+    background-color: transparent;
+}
+.recipe-owner-link a{
+    color: black;
+}
+.recipe-action button a:hover{
+    color: white;
+}
+.recipe-basic-detail {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+.recipe-action .recipe-session-btn, .recipe-action .recipe-like-btn{
+    background-color: rgba(0,0,0,0.2);
+    color: black;
+}
+.recipe-action .recipe-session-btn a {
+    color: black;
+}
+.recipe-action .recipe-session-btn a:hover {
+    color: inherit;
+}
+/* Edit Recipe Form */
+.edit-recipe-btn {
+    background-color: #c6783c;
+    border: none;
+}
+.edit-recipe-btn:hover{
+    background-color: #c6783c;
+}
+.edit-recipe-form .form-group{
+    display: flex;
+    flex-direction: column;
+}
+
+.edit-recipe-form .form-group div{
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px;
+}
+
+.edit-recipe-form .form-group div input {
+    padding: 10px;
+}
+
+/* Recipe Bottom Container*/
+.recipe-detail-container {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+.recipe-detail-container button{
+    background-color: #c6783c;
+    border: none;
+}
+.recipe-detail-container button:hover{
+    background-color: #c6783c;    
+}
+
+.recipe-detail-container>div{
+    flex: 1 1;
+}
+
+/* Edit step & edit ingredients moda */
+.ingr-list-ul div, .step-list-ol div{
+    display: flex;
+}
+
+.modal-body button{
+    background-color: #c6783c;
+    border:none;
+}
+.modal-body button:hover{
+    background-color: #c6783c;
+}
