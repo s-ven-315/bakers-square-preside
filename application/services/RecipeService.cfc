@@ -206,6 +206,7 @@ component {
         return $getPresideObject('recipe_like').selectData(
             selectFields = [
                 'recipe'
+                , 'recipe.id'
                 , 'recipe.name'
                 , 'recipe$owner.display_name as owner_name'
             ]

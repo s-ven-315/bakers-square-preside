@@ -2,7 +2,7 @@
     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="##editDetailModal">
         Edit
     </button>
-    <div class="modal fade" id="editDetailModal" tabindex="-1" role="dialog" aria-labelledby="editDetailModalLabel" aria-hidden="true">
+    <div class="modal fade edit-recipe-form" id="editDetailModal" tabindex="-1" role="dialog" aria-labelledby="editDetailModalLabel" aria-hidden="true">
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
@@ -15,14 +15,22 @@
                 <div class="modal-body">
                         <div class="form-group">
                           <input type="hidden" value=#event.getCurrentPageId()# name="id">
-                          <label for="recipeName">Recipe Name</label>
-                          <input name="recipeName" type="text" value="#args.recipeDetail.title#">
-                          <label for="serving">Serving</label>
-                          <input name="serving" type="number" value="#args.recipeDetail.serving#">
-                          <label for="prepareTime">Preparation Time</label>
-                          <input name="prepareTime" type="number" value="#args.recipeDetail.prepare_time#">
-                          <label for="cookTime">Cooking Time</label>
-                          <input name="cookTime" type="number" value="#args.recipeDetail.cooking_time#">
+                          <div>
+                            <label for="recipeName">Recipe Name</label>
+                            <input name="recipeName" type="text" value="#args.recipeDetail.title#">
+                          </div>
+                          <div>
+                            <label for="serving">Serving</label>
+                            <input name="serving" type="number" value="#args.recipeDetail.serving#">
+                          </div>
+                          <div>
+                            <label for="prepareTime">Preparation Time</label>
+                            <input name="prepareTime" type="number" value="#args.recipeDetail.prepare_time#">
+                          </div>
+                          <div>
+                            <label for="cookTime">Cooking Time</label>
+                            <input name="cookTime" type="number" value="#args.recipeDetail.cooking_time#">
+                          </div>
                         </div>
                 </div>
                 <div class="modal-footer">

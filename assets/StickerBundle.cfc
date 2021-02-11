@@ -18,6 +18,8 @@ component {
 		bundle.asset( "css-bootstrap" ).before( "*" );
 		bundle.asset( "js-bootstrap" ).dependsOn( "js-jquery" );
 		bundle.addAsset( id="js-addMore", path="/js/specific/recipe/modalEdit.js");
+		bundle.addAsset( id="css-userProfile", path="/css/page-types/userProfile.css");
+		bundle.addAsset( id="css-recipe", path="/css/page-types/recipe.css");
 	}
 
 }

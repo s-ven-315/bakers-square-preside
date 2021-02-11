@@ -12,15 +12,12 @@
           <div class="modal-content">
             <div class="modal-header">
               <h5 class="modal-title" id="editStepModalLabel">Recipe Steps</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
             </div>
             <div class="modal-body">
                 <div class="step-list">
                     <ol class="step-list-ol list-group">
                         <cfloop list="#steps#" item="stepsitem" index="idx">
-                            <div style="display:flex">
+                            <div>
                                 <button class="delete-listitem">Delete</button>
                                 <li key="#idx#" class="list-group-item">#stepsitem# </li>
                             </div>

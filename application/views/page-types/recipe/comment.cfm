@@ -12,16 +12,18 @@
           </cfif>
     </div>
     <div>
-        <p>#args.comment.recordCount# Comments</p>
+        <p>Comments (#args.comment.recordCount#)</p>
         <cfif args.comment.recordCount>
             <ul class="liked-list">
               <cfloop query="#args.comment#">
-                <li class="liked-user">
-                <p><a href="#event.buildLink(page="#args.comment.profile#")#">#args.comment.login_id#</a></p>
-                <p>#args.comment.comment#</p>
-                </li>
+                <div>
+                  <li class="liked-user">
+                    <p><a href="#event.buildLink(page="#args.comment.profile#")#">#args.comment.login_id#</a></p>
+                    <p>#args.comment.comment#</p>
+                  </li>
+                </div>
               </cfloop>
             </ul>
-          </cfif>
+        </cfif>
     </div>
 </cfoutput>

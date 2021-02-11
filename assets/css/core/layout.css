@@ -105,9 +105,14 @@ button {
 button:hover {
   box-shadow: 0px 2px 4px -1px rgba(0,0,0,0.2),0px 4px 5px 0px rgba(0,0,0,0.14),0px 1px 10px 0px rgba(0,0,0,0.12);
 }
+button>a{
+  color: white;
+}
+button>a:hover{
+  text-decoration: none;
+}
 
-
-/* Custom dropdown menu */
+/* Custom nav and dropdown menu */
 .nav-user .dropdown-toggle {
   text-transform: uppercase;
 }
@@ -146,4 +151,17 @@ button:hover {
 .nav-login>a:hover{
   background-color: rgb(138,82,42)!important;
   box-shadow:0px 2px 4px -1px rgba(0,0,0,0.2),0px 4px 5px 0px rgba(0,0,0,0.14),0px 1px 10px 0px rgba(0,0,0,0.12);
+}
+
+/* Modal */
+
+.modal .modal-footer button{
+  background-color: transparent;
+  border: none;
+  color: #c6783c;
+  text-transform: uppercase;
+}
+.modal .modal-footer button:hover{
+  background-color: #c6783c;
+  color: white;
 }

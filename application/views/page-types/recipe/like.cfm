@@ -1,23 +1,6 @@
 <cfoutput>
-    <div>
-        <cfif IsFeatureEnabled( "websiteusers" )>
-            <cfif IsLoggedIn()>
-                <form action="#event.buildLink(linkTo="page-types.recipe.like")#" method="POST">
-                  <input type="hidden" name="recipeId" value="#args.recipeDetail.id#">
-                  <input type="hidden" name="pageId" value="#event.getCurrentPageId()#">
-                  <button>
-                    <cfif args.liked.recordCount EQ 0 || args.liked.liked EQ 0>
-                      Like
-                    <cfelse>
-                      Unlike
-                    </cfif>
-                  </button>
-                </form>
-            </cfif>
-          </cfif>
-    </div>
-    <div>
-        <p>#args.likedUser.recordCount# Likes</p>
+  <div>
+        <p>Likes (#args.likedUser.recordCount#)</p>
         <cfif args.likedUser.recordCount>
             <ul class="liked-list">
               <cfloop query="#args.liked#">
