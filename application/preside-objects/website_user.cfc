@@ -1,3 +1,3 @@
 component {
-    property name="username" type="string" dbtype="varchar";
+    property name="user_profile" relationship="many-to-one" relatedTo="user_profile";
 }

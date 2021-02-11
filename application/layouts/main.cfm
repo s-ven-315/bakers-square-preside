@@ -16,6 +16,7 @@
 		#metaTags#
 
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
 
 		#event.renderIncludes( "css" )#
 
@@ -26,17 +27,14 @@
 	<body>
 		<div class="container">
 			<div class="header">
+				<h3 class="text-dark"><a href="/">Bakers' Square</a></h3>
 				<ul class="nav nav-pills pull-right">
 					#mainNav#
 				</ul>
-				<h3 class="text-muted"><a href="/">Preside CMS</a></h3>
 			</div>
 
 			#body#
 
-			<div class="footer">
-				<p>&copy; Pixl8 2013-#Year( Now() )#</p>
-			</div>
 		</div>
 
 		#adminBar#
