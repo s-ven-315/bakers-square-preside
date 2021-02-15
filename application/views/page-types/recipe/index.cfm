@@ -5,6 +5,14 @@
     likedUser = args.getLikedUser?: QUeryNew("")
     liked = args.liked ?: QueryNew("");
     comment = args.comment ?: QueryNew("");
+    var steps = []
+    for (item in listToArray(recipeDetail.steps, ";")) { 
+        steps.append(item)
+    } 
+    var ingr=[]
+    for (item in listToArray(recipeDetail.ingredients, ";")) { 
+        ingr.append(item)
+    } 
 </cfscript>
 <cfoutput>
     
@@ -12,6 +20,9 @@
         <div class="recipe-owner-detail">
             <h2>#recipeDetail.title#</h2>
             <button class="recipe-owner-link"><a href="#event.buildLink(page="#recipeDetail.owner_profile#")#">By #recipeDetail.owner_name# @#recipeDetail.owner_username#</a></button>
+            <cfif event.isOwner(recipe_id = recipeDetail.id, current_user = currentUserId)>
+                #renderView(view = 'page-types/recipe/edit_name', args=args)#
+            </cfif>
         </div>
         <div class="recipe-basic-detail">
             <p>#recipeDetail.serving# Servings</p>
@@ -51,9 +62,9 @@
             <div class="recipe-step-detail">
                 <p>Recipe Steps:</p>
                 <ol>
-                    <cfloop list="#recipeDetail.steps#" item="stepsitem" index="idx">
-                        <div style="display:flex">
-                            <li key="#idx#">#stepsitem#</li>
+                    <cfloop index="i" from="1" to="#arrayLen(steps)#">
+                        <div>
+                            <li>#steps[i]#</li>
                         </div>
                     </cfloop>
                 </ol>
@@ -64,9 +75,9 @@
             <div class="recipe-ingredient-detail">
                 <p>Recipe Ingredients:</p>
                 <ul>
-                    <cfloop list="#recipeDetail.ingredients#" item="ingredient" index="idx">
-                        <div style="display:flex">
-                            <li key="#idx#">#ingredient#</li>
+                    <cfloop index="i" from="1" to="#arrayLen(ingr)#">
+                        <div>
+                            <li>#ingr[i]#</li>
                         </div>
                     </cfloop>
                 </ul>
