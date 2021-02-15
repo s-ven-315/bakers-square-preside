@@ -58,31 +58,41 @@ component {
 			url= event.buildLink(page="#pageId#")
 		);
     }
-
-    public function edit( event, rc, prc, args={} ){
+    // update recipe name (do not allow to have recipe with same name)
+    public function editName (event,rc, prc, args={}){
         var currentUserId = websiteLoginService.getLoggedInUserId();
-
-        var recipeDetail = {
-            name = rc.recipeName
-            , serving = rc.serving
-            , prepare_time = rc.prepareTime
-            , cooking_time = rc.cookTime
-            , id = rc.id
-        }
 
         if (recipeService.isExisting(user_id = currentUserId, name = rc.recipeName)) {
             setNextEvent(
 			    url= event.buildLink(page="#rc.id#")
 		    );
         }
-
-        recipeService.updateDetail( argumentCollection = recipeDetail);
+        recipeService.updateName( name = rc.recipeName, id = rc.id );
 
         siteTreeService.editPage(
             id = rc.id
             , title = rc.recipeName
             , slug = lCase(REReplaceNoCase(rc.recipeName, "[^a-z0-9]", "-", "ALL"))
         )
+
+        setNextEvent(
+			url= event.buildLink(page="#rc.id#")
+		);
+    }
+    // update recipe detail (except name)
+    public function edit( event, rc, prc, args={} ){
+        var currentUserId = websiteLoginService.getLoggedInUserId();
+
+        var recipeDetail = {
+            serving = rc.serving
+            , prepare_time = rc.prepareTime
+            , cooking_time = rc.cookTime
+            , id = rc.id
+        }
+
+        recipeService.updateDetail( argumentCollection = recipeDetail);
+
+      
         setNextEvent(
 			url= event.buildLink(page="#rc.id#")
 		);

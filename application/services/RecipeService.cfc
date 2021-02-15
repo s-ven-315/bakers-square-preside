@@ -70,18 +70,26 @@ component {
             , filter = { id = arguments.id }
         )
     }
-
+    public function updateName(
+        required string name
+        , required string id
+    ){
+        return $getPresideObject('recipe').updateData(
+            data = {
+                name = arguments.name
+            }
+            , filter = {id = arguments.id}
+        )
+    }
     public function updateDetail(
-        require string name
-        , required serving
+        required serving
         , required prepare_time
         , required cooking_time
         , required string id
     ){
         return $getPresideObject('recipe').updateData(
             data = {
-                name = arguments.name
-                , serving = arguments.serving
+                serving = arguments.serving
                 , prepare_time = arguments.prepare_time
                 , cooking_time = arguments.cooking_time
             }

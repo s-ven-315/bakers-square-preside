@@ -46,7 +46,7 @@ component {
                     title = formData.username
                 , slug = formData.username
                 , page_type = "user_profile"
-                , parent_page = "0C02D9B9-5BBF-4839-83FB4C54FEB2E2D4"
+                , parent_page = rc.parentPage
                 );
 
                 var websiteUserData = {

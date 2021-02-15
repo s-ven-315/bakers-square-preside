@@ -17,6 +17,9 @@ component extends="preside.system.config.Config" {
 		_setupInterceptors();
 		_setupLogboxLoggers();
 		_setupNotificationTopics();
+
+		coldbox.requestContextDecorator = "app.decorators.RequestContextDecorator";
+
 	}
 
 	public void function local() {

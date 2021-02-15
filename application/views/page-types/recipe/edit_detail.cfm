@@ -16,10 +16,6 @@
                         <div class="form-group">
                           <input type="hidden" value=#event.getCurrentPageId()# name="id">
                           <div>
-                            <label for="recipeName">Recipe Name</label>
-                            <input name="recipeName" type="text" value="#args.recipeDetail.title#">
-                          </div>
-                          <div>
                             <label for="serving">Serving</label>
                             <input name="serving" type="number" value="#args.recipeDetail.serving#">
                           </div>
