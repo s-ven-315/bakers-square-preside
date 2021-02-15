@@ -1,6 +1,7 @@
 <cfscript>
     event.include("css-recipe");
     recipeDetail = args.recipeDetail ?: QueryNew("");
+    currentUserId = args.currentUserId;
     likedUser = args.getLikedUser?: QUeryNew("")
     liked = args.liked ?: QueryNew("");
     comment = args.comment ?: QueryNew("");
@@ -24,22 +25,24 @@
                 </a>
             </button>
             <cfif IsFeatureEnabled( "websiteusers" )>
-            <cfif IsLoggedIn()>
-                <form action="#event.buildLink(linkTo="page-types.recipe.like")#" method="POST">
-                    <input type="hidden" name="recipeId" value="#args.recipeDetail.id#">
-                    <input type="hidden" name="pageId" value="#event.getCurrentPageId()#">
-                    <button class="recipe-like-btn">
-                        <cfif args.liked.recordCount EQ 0 || args.liked.liked EQ 0>
-                            Like
-                        <cfelse>
-                            Liked
-                        </cfif>
-                    </button>
-                </form>
+                <cfif IsLoggedIn()>
+                    <form action="#event.buildLink(linkTo="page-types.recipe.like")#" method="POST">
+                        <input type="hidden" name="recipeId" value="#args.recipeDetail.id#">
+                        <input type="hidden" name="pageId" value="#event.getCurrentPageId()#">
+                        <button class="recipe-like-btn">
+                            <cfif args.liked.recordCount EQ 0 || args.liked.liked EQ 0>
+                                Like
+                            <cfelse>
+                                Liked
+                            </cfif>
+                        </button>
+                    </form>
+                </cfif>
+            </cfif>
+            <cfif event.isOwner(recipe_id = recipeDetail.id, current_user = currentUserId)>
                 #renderView(view = 'page-types/recipe/edit_detail', args=args)#
                 #renderView(view = 'page-types/recipe/delete', args=args)#
             </cfif>
-        </cfif>
         </div>
     </div>
     <div class="recipe-detail-container">
@@ -54,10 +57,8 @@
                         </div>
                     </cfloop>
                 </ol>
-                <cfif IsFeatureEnabled( "websiteusers" )>
-                    <cfif IsLoggedIn()>
+                <cfif event.isOwner(recipe_id = recipeDetail.id, current_user = currentUserId)>
                         #renderView(view = 'page-types/recipe/edit_step', args=args)#
-                    </cfif>
                 </cfif>
             </div>
             <div class="recipe-ingredient-detail">
@@ -69,11 +70,9 @@
                         </div>
                     </cfloop>
                 </ul>
-                <cfif IsFeatureEnabled( "websiteusers" )>
-                    <cfif IsLoggedIn()>
+                <cfif event.isOwner(recipe_id = recipeDetail.id, current_user = currentUserId)>
                         #renderView(view = 'page-types/recipe/edit_ingr', args=args)#
                 </cfif>
-            </cfif>
             </div>
         </div>
         <div class="recipe-like-comment-container">
