@@ -26,7 +26,16 @@ component {
                 , user_profile = arguments.pageId
             }
         );
+        var userData = $getPresideObject('website_user').selectData(id=newId)
 
+        $createNotification(
+            topic = "newUserSignUp"
+            , type = "INFO"
+            , data = {
+                login_id = userData.login_id
+                , email_address = userData.email_address
+            }
+        )
         return newId;
     }
 
