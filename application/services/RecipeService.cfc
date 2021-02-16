@@ -256,14 +256,12 @@ component {
     public function deleteRecipe(
         required string id
     ){
-        var deleteLike = $getPresideObject('recipe_like').deleteData(
+        $getPresideObject('recipe_like').deleteData(
             filter = {recipe = arguments.id}
         )
-        if (deleteLike){
-            return $getPresideObject('recipe').deleteData(
-                filter = {id = arguments.id}
-            )
-        }
-        return 0;
+        
+        return $getPresideObject('recipe').deleteData(
+            filter = {id = arguments.id}
+        )
     }
 }
