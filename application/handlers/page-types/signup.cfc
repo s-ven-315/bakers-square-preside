@@ -5,6 +5,13 @@ component {
     property name="siteTreeService" inject="siteTreeService";
 
     private function index(event, rc, prc, args={} ){
+
+        if (websiteLoginService.isLoggedIn()){
+            setNextEvent(
+                url = event.buildLink( page="homepage" )
+            )
+        }
+
         return renderView(
             view = 'page-types/signup/index'
             , presideObject = 'signup'
