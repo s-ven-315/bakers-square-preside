@@ -1,3 +1,3 @@
 <cfoutput>
-    <a>Test</a>
+    New user sign up!
 </cfoutput>

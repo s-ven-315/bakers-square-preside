@@ -70,18 +70,26 @@ component {
             , filter = { id = arguments.id }
         )
     }
-
+    public function updateName(
+        required string name
+        , required string id
+    ){
+        return $getPresideObject('recipe').updateData(
+            data = {
+                name = arguments.name
+            }
+            , filter = {id = arguments.id}
+        )
+    }
     public function updateDetail(
-        require string name
-        , required serving
+        required serving
         , required prepare_time
         , required cooking_time
         , required string id
     ){
         return $getPresideObject('recipe').updateData(
             data = {
-                name = arguments.name
-                , serving = arguments.serving
+                serving = arguments.serving
                 , prepare_time = arguments.prepare_time
                 , cooking_time = arguments.cooking_time
             }
@@ -200,6 +208,23 @@ component {
         )
     }
 
+    public function getLikedRecipe(
+        required string user
+    ){
+        return $getPresideObject('recipe_like').selectData(
+            selectFields = [
+                'recipe'
+                , 'recipe.id'
+                , 'recipe.name'
+                , 'recipe$owner.display_name as owner_name'
+            ]
+            , filter = {
+                user = arguments.user
+                , liked = 1
+            }
+        )
+    }
+    
     public function getComment(
         required string recipe
     ){
@@ -225,6 +250,18 @@ component {
                 , user = arguments.user
                 , comment = arguments.comment
             }
+        )
+    }
+
+    public function deleteRecipe(
+        required string id
+    ){
+        $getPresideObject('recipe_like').deleteData(
+            filter = {recipe = arguments.id}
+        )
+        
+        return $getPresideObject('recipe').deleteData(
+            filter = {id = arguments.id}
         )
     }
 }

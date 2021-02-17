@@ -26,6 +26,7 @@ component {
                 , user_profile = arguments.pageId
             }
         );
+        var userData = $getPresideObject('website_user').selectData(id=newId)
 
         return newId;
     }

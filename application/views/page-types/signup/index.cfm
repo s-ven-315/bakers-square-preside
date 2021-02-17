@@ -1,5 +1,6 @@
 <cfoutput>
     <form id="booking-form" action="#event.buildLink(linkTo="page-types.signup.signup")#" class="form form-horizontal" method="POST">
+        <input type="hidden" name="parentPage" value="#event.getPageProperty("parent_page")#">
         #renderForm(
             formName         = "page-types.signup"
             , context          = "website"

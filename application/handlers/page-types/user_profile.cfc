@@ -17,6 +17,7 @@ component {
         args.follower = userService.getFollower(target_user = args.userProfile.id);
         args.following = userService.getFollowing(target_user=args.userProfile.id);
         args.recipe = recipeService.getDetailByOwner(owner_id = args.userProfile.id);
+        args.likedRecipe = recipeService.getLikedRecipe(user = args.userProfile.id);
         return renderView(
             view = 'page-types/user_profile/index'
             , presideObject = 'user_profile'

@@ -1,8 +1,11 @@
 <cfscript>
     event.include("js-modalEdit");
-    var ingr = args.recipeDetail.ingredients;
+    var ingr = []
+    for (item in listToArray(args.recipeDetail.ingredients, ";")) { 
+        ingr.append(item)
+    } 
 </cfscript>
-<cfset cfIngr=#ingr#>
+<cfset cfIngr=#args.recipeDetail.ingredients?:""#>
 <cfoutput>
     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="##editIngrModal">
         Edit Ingredients
@@ -19,10 +22,10 @@
             <div class="modal-body">
                 <div class="ingr-list">
                     <ul class="ingr-list-ul list-group">
-                        <cfloop list="#ingr#" item="ingrItem" index="idx">
-                            <div style="display:flex">
+                        <cfloop index="i" from="1" to="#arrayLen(ingr)#">
+                            <div>
                                 <button class="delete-listitem">Delete</button>
-                                <li key="#idx#" class="list-group-item">#ingrItem# </li>
+                                <li class="list-group-item">#ingr[i]# </li>
                             </div>
                         </cfloop>
                     </ul>
@@ -63,7 +66,7 @@
             node.innerHTML = input;
             div.appendChild(node);
             document.querySelector('.ingr-input').value = "" ;
-            inputStr += ',' + input;
+            inputStr += ';' + input;
             let submitThis = document.querySelector('.ingr-submit').value = inputStr;
         })
 
@@ -79,5 +82,5 @@
     </script>
 </cfoutput>
 <cfscript>
-    event.include("js-addMore");
+    event.include("js-modalEdit");
 </cfscript>

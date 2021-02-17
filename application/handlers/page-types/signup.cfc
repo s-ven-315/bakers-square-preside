@@ -5,6 +5,13 @@ component {
     property name="siteTreeService" inject="siteTreeService";
 
     private function index(event, rc, prc, args={} ){
+
+        if (websiteLoginService.isLoggedIn()){
+            setNextEvent(
+                url = event.buildLink( page="homepage" )
+            )
+        }
+
         return renderView(
             view = 'page-types/signup/index'
             , presideObject = 'signup'
@@ -24,11 +31,11 @@ component {
         }
 
         if( websiteUserService.isExistingUser( email = formData.email ) ){
-			validationResult.addError( fieldName="email" , message="cms:error.email_exists");	
+			validationResult.addError( fieldName="email" , message="This email already exists. Please use another email.");	
 		}
 
 		if( websiteUserService.isExistingUser( username = formData.username ) ){
-			validationResult.addError( fieldName="username" , message="cms:error.email_exists ");	
+			validationResult.addError( fieldName="username" , message="This username already exists. Please use a different username.");	
         }
         
         if ( !validationResult.validated() ){
@@ -46,7 +53,7 @@ component {
                     title = formData.username
                 , slug = formData.username
                 , page_type = "user_profile"
-                , parent_page = "0C02D9B9-5BBF-4839-83FB4C54FEB2E2D4"
+                , parent_page = rc.parentPage
                 );
 
                 var websiteUserData = {
