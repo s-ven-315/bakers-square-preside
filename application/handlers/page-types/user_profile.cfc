@@ -6,18 +6,16 @@ component {
 
     private function index(event, rc, prc, args={} ){
         args.currentUserId = websiteLoginService.getLoggedInUserId() ?: "";
-        var targetUserId = event.getPageProperty("title");
+
         args.userProfile = userService.getUserProfile(
-            target_user = targetUserId
+            targetUserId = url.userId
         )
         args.connected = userService.getRelationship(
-            login_user = args.currentUserId
-            , target_user = args.userProfile.id
+            currentUserId = args.currentUserId
+            , targetUserId = url.userId
         )
-        args.follower = userService.getFollower(target_user = args.userProfile.id);
-        args.following = userService.getFollowing(target_user=args.userProfile.id);
-        args.recipe = recipeService.getDetailByOwner(owner_id = args.userProfile.id);
-        args.likedRecipe = recipeService.getLikedRecipe(user = args.userProfile.id);
+        args.follower = userService.getFollower(targetUserId = url.userId);
+        args.following = userService.getFollowing(targetUserId=url.userId);
         return renderView(
             view = 'page-types/user_profile/index'
             , presideObject = 'user_profile'
@@ -38,21 +36,20 @@ component {
         websiteUserService.updateUserDetail( argumentCollection = userData );
       
         setNextEvent(
-			url= event.buildLink(page="#rc.pageId#")
+			url= event.buildLink(page="user_profile", queryString="userId=#currentUserId#")
 		);
     }
 
     public function follow( event, rc, prc, args={} ){
         var currentUserId = websiteLoginService.getLoggedInUserId() ?: "";
-        var targetUserId = userService.getUserProfile(target_user = rc.userId);
 
         userService.updateRelationship(
-            login_user = currentUserId
-            , target_user = targetUserId.id
+            currentUserId = currentUserId
+            , targetUserId = rc.targetUserId
         );
 
         setNextEvent(
-			url= event.buildLink(page="#targetUserId.profile#")
+            url= event.buildLink(page="user_profile", queryString="userId=#rc.targetUserId#")
 		);
 
     }

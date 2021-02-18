@@ -5,12 +5,8 @@ component {
 
 
     private function mainNavigation(event, rc, prc, args={} ){
-        var loggedIn = websiteLoginService.getLoggedInUserDetails() ?: "";
-        args.currentUserId = loggedIn.login_id ?: "";
-
-        args.userProfile = userService.getUserProfile(
-            target_user = args.currentUserId
-        )
+        args.currentUserId = websiteLoginService.getLoggedInUserId() ?: "";
+        args.userProfile = userService.getUserProfile(targetUserId = args.currentUserId);
 
         return renderView(
             view = 'core/navigation/mainNavigation'
