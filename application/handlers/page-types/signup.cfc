@@ -49,13 +49,6 @@ component {
             )
         } else {
             try {
-                var pageId = siteTreeService.addPage(
-                    title = formData.username
-                , slug = formData.username
-                , page_type = "user_profile"
-                , parent_page = rc.parentPage
-                );
-
                 var websiteUserData = {
                     username = formData.username
                   , email = formData.email
