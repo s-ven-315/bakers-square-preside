@@ -1,25 +1,29 @@
 component {
 
     property name="websiteLoginService" inject="websiteLoginService";
-    property name="siteTreeService" inject="siteTreeService";
     property name="recipeService" inject="RecipeService";
 
     public function index(event, rc, prc, args={} ){
 
         args.currentUserId = websiteLoginService.getLoggedInUserId() ?: "";
+        args.recipeId = prc.recipeId ?:"";
+    
+        if (args.recipeId == ""){
+            return event.setView( view="/page-types/recipe_page/notFound", args=args );
+        }
 
         args.recipeDetail = recipeService.getDetail(
-            recipeId = prc.recipeId
+            recipeId = args.recipeId
         )
 
         args.likedRelationship = recipeService.getLike(
             userId = args.currentUserId
-            , recipeId = prc.recipeId
+            , recipeId = args.recipeId
         )
 
-        args.likedUser = recipeService.getLikedUser(recipeId = prc.recipeId)
+        args.likedUser = recipeService.getLikedUser(recipeId = args.recipeId)
 
-        args.comment = recipeService.getComment(recipeId = prc.recipeId)
+        args.comment = recipeService.getComment(recipeId = args.recipeId)
         event.setView( view="/page-types/recipe_page/index", args=args );
 
     }
