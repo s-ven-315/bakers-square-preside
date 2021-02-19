@@ -2,7 +2,6 @@ component {
 
     property name="websiteUserService" inject="WebsiteUserService";
     property name="websiteLoginService" inject="websiteLoginService";
-    property name="siteTreeService" inject="siteTreeService";
 
     private function index(event, rc, prc, args={} ){
 
@@ -52,7 +51,6 @@ component {
                 var websiteUserData = {
                     username = formData.username
                   , email = formData.email
-                  , pageId = pageId
                 }
 
                 var userId = websiteUserService.saveUser( argumentCollection = websiteUserData );
