@@ -1,9 +1,5 @@
 <cfscript>
-    event.include("js-modalEdit");
-    var steps = []
-    for (item in listToArray(args.recipeDetail.steps, ";")) { 
-        steps.append(item)
-    } 
+    var steps = listToArray(args.recipeDetail.steps, ";")
 </cfscript>
 <cfset cfSteps=#args.recipeDetail.steps?:""#>
 <cfoutput>
@@ -28,10 +24,11 @@
                     </ol>
                 </div>
             </div>
-            <form id="edit-step-form" action="#event.buildLink(linkTo="page-types.recipe.step")#" method="POST">
+            <form id="edit-step-form" action="#event.buildLink(linkTo="page-types.recipe_page.updateSteps")#" method="POST">
                 <div class="modal-body">
                         <div class="form-group">
-                          <input type="hidden" value=#event.getCurrentPageId()# name="id">
+                          <input type="hidden" name="ownerId" value="#args.recipeDetail.owner#">
+                          <input type="hidden" value=#args.recipeDetail.id# name="recipeId">
                           <input type="hidden" name="steps" class="step-submit">
                           <input class="step-input" type="text" placeholder="Add Step">
                           <button type="button" class="btn btn-primary add-more">Add</button>

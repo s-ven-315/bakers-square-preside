@@ -10,56 +10,40 @@ component {
 
     }
     public function getDetail(
-        required string id
+        required string recipeId
     ){
         return $getPresideObject('recipe').selectData(
-            selectFields = [
-                'page.title'
-                , "id"
-                , 'serving'
-                , 'prepare_time'
-                , 'cooking_time'
-                , 'owner.id as owner_id'
-                , 'owner.user_profile as owner_profile'
-                , 'owner.display_name as owner_name'
-                , 'owner.login_id as owner_username'
-                , 'steps'
-                , 'ingredients'
-            ]
-            , filter = {id = arguments.id}
-        )
-    }
-    public function getDetailByOwner(
-        required string owner_id
-    ){
-        return $getPresideObject('recipe').selectData(
-            selectFields = [
-                'page.title'
-                , 'id'
-                , 'serving'
-                , 'prepare_time'
-                , 'cooking_time'
-                , 'name'
-                , 'owner.id as owner_id'
-                , 'owner.user_profile as owner_profile'
-                , 'owner.display_name as owner_name'
-                , 'owner.login_id as owner_username'
-                , 'steps'
-                , 'ingredients'
-            ]
-            , filter = {owner = arguments.owner_id}
+           filter = {id = arguments.recipeId}
         )
     }
 
+    public function getRecipe(
+        required string targetUserId
+        , string recipeName = ""
+    ){
+        var filter = "owner = :owner";
+        
+        var filterParams = {"owner" = arguments.targetUserId}
+
+        if( len( arguments.recipeName ?: '' ) ){
+			filter &= " AND name = :name";
+			filterParams["name"] = arguments.recipeName;
+        }
+
+        return $getPresideObject('recipe').selectData(
+            filter = filter
+            , filterParams = filterParams
+        )
+    }
+    
     public function createRecipe(
         required string owner
         , required string name
         , required serving
         , required prepare_time
         , required cooking_time
-        , required string id
     ){
-        return $getPresideObject('recipe').updateData(
+        return $getPresideObject('recipe').insertData(
             data = {
                 name = arguments.name
                 , owner = arguments.owner
@@ -67,7 +51,6 @@ component {
                 , prepare_time = arguments.prepare_time
                 , cooking_time = arguments.cooking_time
             }
-            , filter = { id = arguments.id }
         )
     }
     public function updateName(
@@ -99,93 +82,90 @@ component {
 
     // check is the recipe exist, one user cannot have 2 recipes with same name
     public function isExisting(
-        required string user_id
-        , required string name
+        required string userId
+        , required string recipeName
     ){
-        var filter = {
-            owner = arguments.user_id
-            , name = arguments.name
-        }
-        return $getPresideObject('recipe').dataExists(filter=filter);
+        return $getPresideObject('recipe').dataExists(
+            filter = {
+                owner = arguments.userId
+                , name = arguments.recipeName
+            }
+        );
     }
 
     // update steps
     public function updateSteps(
-        required string id
+        required string recipeId
         , required steps
     ){
         return $getPresideObject('recipe').updateData(
             data = {
                 steps = arguments.steps
             }
-            , filter = { id = arguments.id}
+            , filter = { id = arguments.recipeId}
         )
     }
     // update ingredients
-    public function updateIngr(
-        required string id
-        , required ingr
+    public function updateIngredients(
+        required string recipeId
+        , required ingredients
     ){
         return $getPresideObject('recipe').updateData(
             data = {
-                ingredients = arguments.ingr
+                ingredients = arguments.ingredients
             }
-            , filter = { id = arguments.id}
+            , filter = { id = arguments.recipeId}
         )
     }
     // get liked
     public function getLike(
-        required string login_user
-        , required string recipe
+        required string userId
+        , required string recipeId
     ){
-        return $getPresideObject("recipe_like").selectData(
-            selectFields = ["liked"]
-            , filter = "user = :user and recipe = :recipe"
-            , filterParams = {
-                "user" = arguments.login_user
-                , "recipe" = arguments.recipe
+        return $getPresideObject("recipe_like_relationship").selectData(
+            filter = {
+                user = arguments.userId
+                , recipe = arguments.recipeId
             }
         )
     }
 
     public function updateLike(
-        required string login_user
-        , required string recipe
+        required string userId
+        , required string recipeId
     ){
-        var relationship = getLike(login_user = arguments.login_user, recipe = arguments.recipe);
+        var relationship = getLike(userId = arguments.userId, recipeId = arguments.recipeId);
         if (relationship.liked EQ ""){
             // new like
-            $getPresideObject("recipe_like").insertData(
+            $getPresideObject("recipe_like_relationship").insertData(
                 data = {
-                    user = arguments.login_user
-                    , recipe = arguments.recipe
-                    , liked = 1
+                    user = arguments.userId
+                    , recipe = arguments.recipeId
+                    , liked = true
                 }
             )
         } else {
             // re-like
-            if (relationship.liked EQ 0) {
-                $getPresideObject("recipe_like").updateData(
+            if (relationship.liked EQ false) {
+                $getPresideObject("recipe_like_relationship").updateData(
                     data = {
-                        liked = 1
+                        liked = true
                     }
-                    , filter = "user = :user and recipe = :recipe"
-                    , filterParams = {
-                        "user" = arguments.login_user
-                        , "recipe" = arguments.recipe
+                    , filter = {
+                        user = arguments.userId
+                        , recipe = arguments.recipeId
                     }
                 )
             }
-            else if (relationship.liked EQ 1) {
+            else if (relationship.liked EQ true) {
                 // unlike
-                $getPresideObject("recipe_like").updateData(
+                $getPresideObject("recipe_like_relationship").updateData(
                     data = {
-                        liked = 0
+                        liked = false
                     }
-                    , filter = "user = :user and recipe = :recipe"
-                    , filterParams = {
-                        "user" = arguments.login_user
-                        , "recipe" = arguments.recipe
+                    , filter = {
+                        user = arguments.userId
+                        , recipe = arguments.recipeId
                     }
                 )
             }
@@ -193,17 +173,16 @@ component {
     }
 
     public function getLikedUser(
-        required string recipe
+        required string recipeId
     ){
-        return $getPresideObject('recipe_like').selectData(
+        return $getPresideObject('recipe_like_relationship').selectData(
             selectFields = [
-                'user'
-                , 'user.login_id'
-                , 'user.user_profile as profile'
+                'user.login_id'
+                , 'user.id'
             ]
             , filter = {
-                recipe = arguments.recipe
-                , liked = 1
+                recipe = arguments.recipeId
+                , liked = true
             }
         )
     }
@@ -211,57 +190,48 @@ component {
     public function getLikedRecipe(
         required string user
     ){
-        return $getPresideObject('recipe_like').selectData(
-            selectFields = [
-                'recipe'
-                , 'recipe.id'
-                , 'recipe.name'
-                , 'recipe$owner.display_name as owner_name'
-            ]
-            , filter = {
+        return $getPresideObject('recipe_like_relationship').selectData(
+            filter = {
                 user = arguments.user
-                , liked = 1
+                , liked = true
             }
         )
     }
     
     public function getComment(
-        required string recipe
+        required string recipeId
     ){
         return $getPresideObject('recipe_comment').selectData(
             selectFields = [
-                'user'
+                'user.id'
                 , 'user.login_id'
-                , 'user.user_profile as profile'
                 , 'comment'
             ]
-            , filter = {recipe = arguments.recipe}
+            , filter = {recipe = arguments.recipeId}
         )
     }
 
     public function newComment(
-        required string recipe
-        , required string user
+        required string recipeId
+        , required string userId
         , required string comment
     ){
         return $getPresideObject('recipe_comment').insertData(
             data = {
-                recipe = arguments.recipe
-                , user = arguments.user
+                recipe = arguments.recipeId
+                , user = arguments.userId
                 , comment = arguments.comment
             }
         )
     }
 
     public function deleteRecipe(
-        required string id
+        required string recipeId
     ){
-        $getPresideObject('recipe_like').deleteData(
-            filter = {recipe = arguments.id}
+        $getPresideObject('recipe_like_relationship').deleteData(
+            filter = {recipe = arguments.recipeId}
         )
         
-        return $getPresideObject('recipe').deleteData(
-            filter = {id = arguments.id}
-        )
+        return $getPresideObject('recipe').deleteData(id = arguments.recipeId)
     }
 }

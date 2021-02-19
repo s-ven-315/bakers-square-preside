@@ -3,25 +3,19 @@
     recipeDetail = args.recipeDetail ?: QueryNew("");
     currentUserId = args.currentUserId;
     likedUser = args.getLikedUser?: QUeryNew("")
-    liked = args.liked ?: QueryNew("");
+    likedRelationship = args.likedRelationship ?: QueryNew("");
     comment = args.comment ?: QueryNew("");
-    var steps = []
-    for (item in listToArray(recipeDetail.steps, ";")) { 
-        steps.append(item)
-    } 
-    var ingr=[]
-    for (item in listToArray(recipeDetail.ingredients, ";")) { 
-        ingr.append(item)
-    } 
+    var steps = listToArray(recipeDetail.steps, ";")
+    var ingr= listToArray(recipeDetail.ingredients, ";")
 </cfscript>
 <cfoutput>
     
     <div class="recipe-container">
         <div class="recipe-owner-detail">
-            <h2>#recipeDetail.title#</h2>
-            <button class="recipe-owner-link"><a href="#event.buildLink(page="#recipeDetail.owner_profile#")#">By #recipeDetail.owner_name# @#recipeDetail.owner_username#</a></button>
+            <h2>#recipeDetail.name#</h2>
+            <button class="recipe-owner-link"><a href="#event.buildLink(userId = recipeDetail.owner)#"></a></button>
             <cfif event.isOwner(recipe_id = recipeDetail.id, current_user = currentUserId)>
-                #renderView(view = 'page-types/recipe/edit_name', args=args)#
+                #renderView(view = 'page-types/recipe_page/_editRecipeName', args=args)#
             </cfif>
         </div>
         <div class="recipe-basic-detail">
@@ -31,17 +25,17 @@
         </div>
         <div class="recipe-action">
             <button class="recipe-session-btn">
-                <a href="#event.buildLink(page="session", queryString="recipeId=#args.recipeDetail.id#")#">
+                <a href="#event.buildLink(page="session", queryString="recipeId=#recipeDetail.id#")#">
                     Start Baking
                 </a>
             </button>
             <cfif IsFeatureEnabled( "websiteusers" )>
                 <cfif IsLoggedIn()>
-                    <form action="#event.buildLink(linkTo="page-types.recipe.like")#" method="POST">
-                        <input type="hidden" name="recipeId" value="#args.recipeDetail.id#">
-                        <input type="hidden" name="pageId" value="#event.getCurrentPageId()#">
+                    <form action="#event.buildLink(linkTo="page-types.recipe_page.like")#" method="POST">
+                        <input type="hidden" name="ownerId" value="#recipeDetail.owner#">
+                        <input type="hidden" name="recipeId" value="#recipeDetail.id#">
                         <button class="recipe-like-btn">
-                            <cfif args.liked.recordCount EQ 0 || args.liked.liked EQ 0>
+                            <cfif args.likedRelationship.recordCount EQ 0 || args.likedRelationship.liked EQ 0>
                                 Like
                             <cfelse>
                                 Liked
@@ -51,8 +45,8 @@
                 </cfif>
             </cfif>
             <cfif event.isOwner(recipe_id = recipeDetail.id, current_user = currentUserId)>
-                #renderView(view = 'page-types/recipe/edit_detail', args=args)#
-                #renderView(view = 'page-types/recipe/delete', args=args)#
+                #renderView(view = 'page-types/recipe_page/_editDetail', args=args)#
+                #renderView(view = 'page-types/recipe_page/_delete', args=args)#
             </cfif>
         </div>
     </div>
@@ -69,7 +63,7 @@
                     </cfloop>
                 </ol>
                 <cfif event.isOwner(recipe_id = recipeDetail.id, current_user = currentUserId)>
-                        #renderView(view = 'page-types/recipe/edit_step', args=args)#
+                        #renderView(view = 'page-types/recipe_page/_editSteps', args=args)#
                 </cfif>
             </div>
             <div class="recipe-ingredient-detail">
@@ -82,14 +76,14 @@
                     </cfloop>
                 </ul>
                 <cfif event.isOwner(recipe_id = recipeDetail.id, current_user = currentUserId)>
-                        #renderView(view = 'page-types/recipe/edit_ingr', args=args)#
+                        #renderView(view = 'page-types/recipe_page/_editIngredients', args=args)#
                 </cfif>
             </div>
         </div>
         <div class="recipe-like-comment-container">
             <h3>Likes & Comments</h3>
-            #renderView(view='page-types/recipe/like', args=args)#
-            #renderView(view='page-types/recipe/comment', args=args)#
+            #renderView(view='page-types/recipe_page/_likedUser', args=args)#
+            #renderView(view='page-types/recipe_page/_comment', args=args)#
         </div>
     </div>
    
