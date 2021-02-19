@@ -1,5 +1,4 @@
 /**
- * @allowedParentPageTypes user_profile
  * @showInSiteTree false
  * @sitetreeGridFields page.title
  */

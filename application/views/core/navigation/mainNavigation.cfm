@@ -1,5 +1,6 @@
 <cfscript>
 	userProfile = args.userProfile ?: QueryNew("");
+	currentUserId = args.currentUserId;
 </cfscript>
 
 <cfoutput>
@@ -9,7 +10,7 @@
 				<button class="dropdown-toggle" data-toggle="dropdown">#userProfile.login_id#</button>
 				<ul class="dropdown-menu" role="menu">
 					<li>
-						<a href="#event.buildLink( page="#userProfile.profile#" )#">
+						<a href="#event.buildLink( userId=currentUserId)#">
 							Profile Page
 						</a>
 					</li>

@@ -5,6 +5,13 @@ component {
     property name="siteTreeService" inject="siteTreeService";
 
     private function index(event, rc, prc, args={} ){
+
+        if (websiteLoginService.isLoggedIn()){
+            setNextEvent(
+                url = event.buildLink( page="homepage" )
+            )
+        }
+
         return renderView(
             view = 'page-types/signup/index'
             , presideObject = 'signup'
@@ -42,13 +49,6 @@ component {
             )
         } else {
             try {
-                var pageId = siteTreeService.addPage(
-                    title = formData.username
-                , slug = formData.username
-                , page_type = "user_profile"
-                , parent_page = rc.parentPage
-                );
-
                 var websiteUserData = {
                     username = formData.username
                   , email = formData.email
