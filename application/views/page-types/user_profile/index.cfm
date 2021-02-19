@@ -19,13 +19,13 @@
             <p>@#userProfile.login_id#</p>
         </div>
         <div class="follow-container">
-          #renderView(view = 'page-types/user_profile/relationship_list', args=args)#
+          #renderView(view = 'page-types/user_profile/_followerRelationship', args=args)#
         </div>
         <cfif IsFeatureEnabled( "websiteusers" )>
           <cfif IsLoggedIn()>
             <cfif currentUserId NEQ userProfile.id>
               <form action="#event.buildLink(linkTo="page-types.user_profile.follow")#" method="POST">
-                <input type="hidden" name="userId" value="#userProfile.login_id#">
+                <input type="hidden" name="targetUserId" value="#userProfile.id#">
                 <button>
                   <cfif relationship.recordCount EQ 0 || relationship.connected EQ 0>
                     Follow
@@ -38,13 +38,13 @@
           </cfif>
         </cfif>
         <cfif currentUserId EQ userProfile.id>
-          #renderView(view = 'page-types/user_profile/edit_profile')#
+          #renderView(view = 'page-types/user_profile/_editProfile')#
         </cfif>
       </div>
     </cfif>
     <div class="user-recipe-outer-container">
       <cfif currentUserId EQ userProfile.id>
-        #renderView(view = 'page-types/user_profile/new_recipe')#
+        #renderView(view = 'page-types/user_profile/_newRecipe')#
       </cfif>
       <div class="user-recipe-inner-container">
         <div class="user-recipe">
@@ -52,7 +52,7 @@
           <div class="user-recipe-list">
             <cfloop query=#recipe#>
               <li class="user-recipe-list">
-                <h5><a href="#event.buildLink(page=id)#">#name#</a></h5>
+                <h5><a href="#event.buildLink(recipeId = id, userId = owner)#">#name#</a></h5>
               </li>
             </cfloop>
           </div>
@@ -62,7 +62,7 @@
           <div class="user-recipe-list">
             <cfloop query=#likedRecipe#>
               <li class="user-recipe-list">
-                <h5><a href="#event.buildLink(page=id)#">#name#</a></h5>
+                <h5><a href="#event.buildLink(recipeId = recipeId, userId = userId)#">#name#</a></h5>
               </li>
             </cfloop>
           </div>

@@ -3,6 +3,8 @@
     justify-content: center;
     height: 300px;
     align-items: center;
+    width: 70%;
+    margin: auto;
 }
 .carousel-inner .item{
     align-items: center;

@@ -89,7 +89,7 @@
     flex: 1 1;
 }
 
-/* Edit step & edit ingredients moda */
+/* Edit step & edit ingredients modal */
 .ingr-list-ul div, .step-list-ol div{
     display: flex;
 }
@@ -100,4 +100,12 @@
 }
 .modal-body button:hover{
     background-color: #c6783c;
+}
+
+.step-input, .ingr-input {
+    width: 100%;
+    padding: 10px;
+}
+#edit-step-form .form-group, #edit-ingr-form .form-group {
+    display:flex;
 }

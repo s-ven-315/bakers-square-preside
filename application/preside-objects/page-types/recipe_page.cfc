@@ -2,7 +2,5 @@
  * @isSystemPageType true
  */
 
-
 component {
-    
 }

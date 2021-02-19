@@ -2,7 +2,7 @@
     event.include("css-session");
     recipeDetail = args.recipeDetail ?: QueryNew("");
     var steps = []
-    for (item in listToArray(recipeDetail.steps, ",")) { 
+    for (item in listToArray(recipeDetail.steps, ";")) { 
         steps.append(item)
     } 
 </cfscript>

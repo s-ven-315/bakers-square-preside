@@ -11,97 +11,101 @@ component {
     }
 
     public function getUserProfile(
-        required string target_user
+        required string targetUserId
+    ){
+        return $getPresideObject("website_user").selectData(id = arguments.targetUserId)
+    }
+    
+    // get user Id using login_id for routing handler
+    public function getUserId(
+        required string userLoginId
     ){
         return $getPresideObject("website_user").selectData(
-            selectFields = [
-                "display_name"
-                , "login_id"
-                , "website_user.id as id"
-                , "user_profile.id as profile"
-            ]
-            , filter = {"login_id" = arguments.target_user}
+            selectFields = ["id"]
+            , filter = { login_id = arguments.userLoginId }
         )
     }
 
     public function getFollower(
-        required string target_user
+        required string targetUserId
     ){
-        return $getPresideObject("relationship").selectData(
-            selectFields = ["follower.login_id", "follower.user_profile"]
-            , filter = "following = :following and connected = :connected"
-            , filterParams = {
-                "following" = arguments.target_user
-                , "connected" = 1
+        return $getPresideObject("follower_relationship").selectData(
+            selectFields = [
+                'follower.login_id'
+                , 'follower.id'
+            ]
+            , filter = {
+                following = arguments.targetUserId
+                , connected = true
             }
         )
     }
 
     public function getFollowing(
-        required string target_user
+        required string targetUserId
     ){
-        return $getPresideObject("relationship").selectData(
-            selectFields = ["following.login_id", "following.user_profile"]
-            , filter = "follower = :follower and connected = :connected"
-            , filterParams = {
-                "follower" = arguments.target_user
-                , "connected" = 1
+        return $getPresideObject("follower_relationship").selectData(
+            selectFields = [
+                'following.login_id'
+                , 'following.id'
+            ]
+            , filter = {
+                follower = arguments.targetUserId
+                , connected = true
             }
         )
     }
 
     public function getRelationship(
-        required string login_user
-        , required string target_user
+        required string currentUserId
+        , required string targetUserId
     ){
-        return $getPresideObject("relationship").selectData(
-            selectFields = ["connected"]
-            , filter = "follower = :follower and following = :following"
-            , filterParams = {
-                "follower" = arguments.login_user
-                , "following" = arguments.target_user
+        return $getPresideObject("follower_relationship").selectData(
+            filter = {
+                follower = arguments.currentUserId
+                , following = arguments.targetUserId
             }
         )
     }
 
     public function updateRelationship(
-        required string login_user
-        , required string target_user
+        required string currentUserId
+        , required string targetUserId
     ){
-        var relationship = getRelationship(login_user = arguments.login_user, target_user = arguments.target_user);
+        var relationship = getRelationship(currentUserId = arguments.currentUserId, targetUserId = arguments.targetUserId);
         if (relationship.connected EQ ""){
             // new follow
-            $getPresideObject("relationship").insertData(
+            $getPresideObject("follower_relationship").insertData(
                 data = {
-                    follower = arguments.login_user
-                    , following = arguments.target_user
-                    , connected = 1
+                    follower = arguments.currentUserId
+                    , following = arguments.targetUserId
+                    , connected = true
                 }
             )
         } else {
             // not following (to refollow)
-            if (relationship.connected EQ 0) {
-                $getPresideObject("relationship").updateData(
+            if (relationship.connected EQ false) {
+                $getPresideObject("follower_relationship").updateData(
                     data = {
-                        connected = 1
+                        connected = true
                     }
                     , filter = "follower = :follower and following = :following"
                     , filterParams = {
-                        "follower" = arguments.login_user
-                        , "following" = arguments.target_user
+                        "follower" = arguments.currentUserId
+                        , "following" = arguments.targetUserId
                     }
                 )
             }
-            else if (relationship.connected EQ 1) {
+            else if (relationship.connected EQ true) {
                 // already follow (to unfollow)
-                $getPresideObject("relationship").updateData(
+                $getPresideObject("follower_relationship").updateData(
                     data = {
-                        connected = 0
+                        connected = false
                     }
                     , filter = "follower = :follower and following = :following"
                     , filterParams = {
-                        "follower" = arguments.login_user
-                        , "following" = arguments.target_user
+                        "follower" = arguments.currentUserId
+                        , "following" = arguments.targetUserId
                     }
                 )
             }

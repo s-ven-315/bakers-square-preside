@@ -8,10 +8,9 @@
               <div class="modal-header">
                 <h5 class="modal-title" id="createRecipeModalLabel">Create New Recipe</h5>
               </div>
-              <form action="#event.buildLink(linkTo="page-types.recipe.create")#" method="POST">
+              <form action="#event.buildLink(linkTo="page-types.recipe_page.create")#" method="POST">
                   <div class="modal-body">
                     <div class="form-group">
-                      <input type="hidden" name="pageId" value="#event.getCurrentPageId()#"/>
                       <div>
                         <label for="recipeName">Recipe Name</label>
                         <input name="recipeName" type="text" >

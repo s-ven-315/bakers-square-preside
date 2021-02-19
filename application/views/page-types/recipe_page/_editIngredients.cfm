@@ -1,8 +1,7 @@
 <cfscript>
-    event.include("js-modalEdit");
-    var ingr = args.recipeDetail.ingredients;
+    var ingr = listToArray(args.recipeDetail.ingredients, ";")
 </cfscript>
-<cfset cfIngr=#ingr#>
+<cfset cfIngr=#args.recipeDetail.ingredients?:""#>
 <cfoutput>
     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="##editIngrModal">
         Edit Ingredients
@@ -12,27 +11,25 @@
           <div class="modal-content">
             <div class="modal-header">
               <h5 class="modal-title" id="editIngrModalLabel">Recipe Ingredients</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
             </div>
             <div class="modal-body">
                 <div class="ingr-list">
                     <ul class="ingr-list-ul list-group">
-                        <cfloop list="#ingr#" item="ingrItem" index="idx">
+                        <cfloop index="i" from="1" to="#arrayLen(ingr)#">
                             <div>
                                 <button class="delete-listitem">Delete</button>
-                                <li key="#idx#" class="list-group-item">#ingrItem# </li>
+                                <li class="list-group-item">#ingr[i]# </li>
                             </div>
                         </cfloop>
                     </ul>
                 </div>
             </div>
-            <form id="edit-ingr-form" action="#event.buildLink(linkTo="page-types.recipe.ingr")#" method="POST">
+            <form id="edit-ingr-form" action="#event.buildLink(linkTo="page-types.recipe_page.updateIngredients")#" method="POST">
                 <div class="modal-body">
                         <div class="form-group">
-                          <input type="hidden" value=#event.getCurrentPageId()# name="id">
-                          <input type="hidden" name="ingr" class="ingr-submit">
+                          <input type="hidden" name="ownerId" value="#args.recipeDetail.owner#">
+                          <input type="hidden" value=#args.recipeDetail.id# name="recipeId">
+                          <input type="hidden" name="ingredients" class="ingr-submit">
                           <input class="ingr-input" type="text" placeholder="Add Ingredient">
                           <button type="button" class="btn btn-primary add-more-ingr">Add</button>
                         </div>
@@ -63,7 +60,7 @@
             node.innerHTML = input;
             div.appendChild(node);
             document.querySelector('.ingr-input').value = "" ;
-            inputStr += ',' + input;
+            inputStr += ';' + input;
             let submitThis = document.querySelector('.ingr-submit').value = inputStr;
         })
 
@@ -79,5 +76,5 @@
     </script>
 </cfoutput>
 <cfscript>
-    event.include("js-addMore");
+    event.include("js-modalEdit");
 </cfscript>
