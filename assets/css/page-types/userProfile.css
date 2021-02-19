@@ -1,0 +1,85 @@
+/* whole profile page */
+.profile-page-container button {
+    background-color: #c6783c;
+    border: none;
+}
+.profile-page-container button:hover {
+    background-color: #c6783c;
+    box-shadow: 0px 2px 4px -1px rgba(0,0,0,0.2),0px 4px 5px 0px rgba(0,0,0,0.14),0px 1px 10px 0px rgba(0,0,0,0.12);
+}
+.profile-page-container {
+    display: flex;
+}
+
+/* user profile container */
+.profile-container {
+    max-width: 256px;
+    color: #c6783c;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    border-radius: 5px;
+    border: 1px solid rgba(0,0,0,.1);
+    box-shadow: 4px 4px 4px rgba(0,0,0,.12);
+    margin-right: 40px;
+    height: 200px;
+    justify-content: space-around;
+}
+/* User profile (display name and login id) */
+.user-profile {
+    display: flex;
+    flex-direction: column;
+}
+.user-profile>p{
+    margin-block-end: 0px;
+}
+
+/* Follow Button & Follower/Following List */
+.follow-container{
+    display: flex;
+}
+.follow-container button{
+    background-color: transparent;
+    border: none;
+    color: #c6783c;
+}
+
+.follow-container div:first-child{
+    border-right: 1px solid #c6783c;
+}
+
+/* User recipe container */
+.user-recipe-outer-container {
+    width: 100%;
+}
+.user-recipe-inner-container {
+    display: flex;
+}
+.user-recipe-inner-container>div {
+    flex: 1 1;
+}
+.user-recipe-inner-container h4{
+    text-transform: uppercase;
+}
+
+/* New recipe form */
+.new-recipe-form .form-group{
+    display: flex;
+    flex-direction: column;
+}
+
+.new-recipe-form .form-group div{
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px;
+}
+
+.new-recipe-form .form-group div input {
+    padding: 10px;
+}
+
+/* User profile edit modal */
+.edit-profile-form .form-group input{
+    width: 100%;
+    padding: 10px;
+}

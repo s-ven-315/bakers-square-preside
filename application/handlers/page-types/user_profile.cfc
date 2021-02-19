@@ -4,25 +4,28 @@ component {
     property name="websiteLoginService" inject="WebsiteLoginService";
     property name="recipeService" inject="RecipeService";
 
-    private function index(event, rc, prc, args={} ){
+    public function index(event, rc, prc, args={} ){
+		args.userId   = prc.userId ?: "";
+        if (args.userId == ""){
+            return event.setView( view="/page-types/user_profile/notFound");
+        }
+
         args.currentUserId = websiteLoginService.getLoggedInUserId() ?: "";
-        var targetUserId = event.getPageProperty("title");
+		event.initializeDummyPresideSiteTreePage();
+
         args.userProfile = userService.getUserProfile(
-            target_user = targetUserId
+            targetUserId = args.userId
         )
         args.connected = userService.getRelationship(
-            login_user = args.currentUserId
-            , target_user = args.userProfile.id
+            currentUserId = args.currentUserId
+            , targetUserId = args.userId
         )
-        args.follower = userService.getFollower(target_user = args.userProfile.id);
-        args.following = userService.getFollowing(target_user=args.userProfile.id);
-        args.recipe = recipeService.getDetailByOwner(owner_id = args.userProfile.id);
-        return renderView(
-            view = 'page-types/user_profile/index'
-            , presideObject = 'user_profile'
-            , id = event.getCurrentPageId()
-            , args = args
-        )
+        args.follower = userService.getFollower(targetUserId = args.userId);
+        args.following = userService.getFollowing(targetUserId=args.userId);
+        args.recipe = recipeService.getRecipe(targetUserId = args.userId);
+        args.likedRecipe = recipeService.getLikedRecipe(targetUserId = args.userId);
+        event.setView( view="/page-types/user_profile/index", args=args );
+
     }
 
     public function edit( event, rc, prc, args={} ){
@@ -37,21 +40,20 @@ component {
         websiteUserService.updateUserDetail( argumentCollection = userData );
       
         setNextEvent(
-			url= event.buildLink(page="#rc.pageId#")
+			url= event.buildLink(userId = currentUserId)
 		);
     }
 
     public function follow( event, rc, prc, args={} ){
         var currentUserId = websiteLoginService.getLoggedInUserId() ?: "";
-        var targetUserId = userService.getUserProfile(target_user = rc.userId);
 
         userService.updateRelationship(
-            login_user = currentUserId
-            , target_user = targetUserId.id
+            currentUserId = currentUserId
+            , targetUserId = rc.targetUserId
         );
 
         setNextEvent(
-			url= event.buildLink(page="#targetUserId.profile#")
+            url= event.buildLink(userId = rc.targetUserId)
 		);
 
     }

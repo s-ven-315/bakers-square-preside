@@ -2,14 +2,11 @@
     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="##editProfileModal">
         Edit Profile
     </button>
-    <div class="modal fade" id="editProfileModal" tabindex="-1" role="dialog" aria-labelledby="editProfileModalLabel" aria-hidden="true">
+    <div class="modal fade edit-profile-form" id="editProfileModal" tabindex="-1" role="dialog" aria-labelledby="editProfileModalLabel" aria-hidden="true">
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
               <h5 class="modal-title" id="editProfileModalLabel">Change Profile Name</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
             </div>
             <form action="#event.buildLink(linkTo="page-types.user_profile.edit")#" method="POST">
                 <div class="modal-body">
