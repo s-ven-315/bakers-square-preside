@@ -62,7 +62,7 @@
           <div class="user-recipe-list">
             <cfloop query=#likedRecipe#>
               <li class="user-recipe-list">
-                <h5><a href="#event.buildLink(recipeId = id, userId = owner)#">#name#</a></h5>
+                <h5><a href="#event.buildLink(recipeId = recipeId, userId = userId)#">#name#</a></h5>
               </li>
             </cfloop>
           </div>
