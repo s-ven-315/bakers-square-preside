@@ -10,7 +10,7 @@
 				<button class="dropdown-toggle" data-toggle="dropdown">#userProfile.login_id#</button>
 				<ul class="dropdown-menu" role="menu">
 					<li>
-						<a href="#event.buildLink( page="user_profile", queryString="userId=#currentUserId#")#">
+						<a href="#event.buildLink( userId=currentUserId)#">
 							Profile Page
 						</a>
 					</li>

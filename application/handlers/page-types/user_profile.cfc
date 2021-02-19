@@ -4,24 +4,22 @@ component {
     property name="websiteLoginService" inject="WebsiteLoginService";
     property name="recipeService" inject="RecipeService";
 
-    private function index(event, rc, prc, args={} ){
+    public function index(event, rc, prc, args={} ){
+		args.userId   = prc.userId ?: "";
         args.currentUserId = websiteLoginService.getLoggedInUserId() ?: "";
+		event.initializeDummyPresideSiteTreePage();
 
         args.userProfile = userService.getUserProfile(
-            targetUserId = url.userId
+            targetUserId = args.userId
         )
         args.connected = userService.getRelationship(
             currentUserId = args.currentUserId
-            , targetUserId = url.userId
+            , targetUserId = args.userId
         )
-        args.follower = userService.getFollower(targetUserId = url.userId);
-        args.following = userService.getFollowing(targetUserId=url.userId);
-        return renderView(
-            view = 'page-types/user_profile/index'
-            , presideObject = 'user_profile'
-            , id = event.getCurrentPageId()
-            , args = args
-        )
+        args.follower = userService.getFollower(targetUserId = args.userId);
+        args.following = userService.getFollowing(targetUserId=args.userId);
+        event.setView( view="/page-types/user_profile/index", args=args );
+
     }
 
     public function edit( event, rc, prc, args={} ){
@@ -36,7 +34,7 @@ component {
         websiteUserService.updateUserDetail( argumentCollection = userData );
       
         setNextEvent(
-			url= event.buildLink(page="user_profile", queryString="userId=#currentUserId#")
+			url= event.buildLink(userId = currentUserId)
 		);
     }
 
@@ -49,7 +47,7 @@ component {
         );
 
         setNextEvent(
-            url= event.buildLink(page="user_profile", queryString="userId=#rc.targetUserId#")
+            url= event.buildLink(userId = rc.targetUserId)
 		);
 
     }

@@ -26,7 +26,7 @@
             <ul class="follower-list">
               <cfloop query="follower">
                 <li class="follower-listitem">
-                <p><a href="#event.buildLink( page="user_profile", queryString="userId=#id#")#">#login_id#</a></p>
+                <p><a href="#event.buildLink( userId = id )#">#login_id#</a></p>
                 </li>
               </cfloop>
             </ul>
@@ -50,7 +50,7 @@
             <ul class="following-list">
               <cfloop query="following">
                 <li class="following-listitem">
-                <p><a href="#event.buildLink( page="user_profile", queryString="userId=#id#")#">#login_id#</a></p>
+                <p><a href="#event.buildLink( userId = id )#">#login_id#</a></p>
                 </li>
               </cfloop>
             </ul>

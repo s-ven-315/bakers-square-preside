@@ -15,6 +15,16 @@ component {
     ){
         return $getPresideObject("website_user").selectData(id = arguments.targetUserId)
     }
+    
+    // get user Id using login_id for routing handler
+    public function getUserId(
+        required string userLoginId
+    ){
+        return $getPresideObject("website_user").selectData(
+            selectFields = ["id"]
+            , filter = { login_id = arguments.userLoginId }
+        )
+    }
 
     public function getFollower(
         required string targetUserId
