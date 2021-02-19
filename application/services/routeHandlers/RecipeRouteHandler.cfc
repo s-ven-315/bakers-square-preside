@@ -28,7 +28,7 @@ component implements="preside.system.services.routeHandlers.iRouteHandler" outpu
 
         prc.userId = _getUserService().getUserId(userLoginId).id ?: "";
 
-        prc.recipeId = _getRecipeService().getRecipeDetailByOwnerAndName(recipeName = recipeName, userId = prc.userId ).id ?: "";
+        prc.recipeId = _getRecipeService().getRecipe(recipeName = recipeName, targetUserId = prc.userId ).id ?: "";
 
 		rc.event = "page-types.recipe_page.index";
 

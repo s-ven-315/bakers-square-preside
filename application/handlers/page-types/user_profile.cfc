@@ -18,6 +18,7 @@ component {
         )
         args.follower = userService.getFollower(targetUserId = args.userId);
         args.following = userService.getFollowing(targetUserId=args.userId);
+        args.recipe = recipeService.getRecipe(targetUserId = args.userId)
         event.setView( view="/page-types/user_profile/index", args=args );
 
     }
