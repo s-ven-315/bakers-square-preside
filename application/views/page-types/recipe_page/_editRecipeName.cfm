@@ -11,13 +11,14 @@
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
-            <form action="#event.buildLink(linkTo="page-types.recipe.editName")#" method="POST">
+            <form action="#event.buildLink(linkTo="page-types.recipe_page.editRecipeName")#" method="POST">
                 <div class="modal-body">
                         <div class="form-group">
-                          <input type="hidden" value=#event.getCurrentPageId()# name="id">
+                          <input type="hidden" name="ownerId" value="#args.recipeDetail.owner#">
+                          <input type="hidden" value=#args.recipeDetail.id# name="recipeId">
                           <div>
                             <label for="recipeName">Recipe Name</label>
-                            <input name="recipeName" type="text" value="#args.recipeDetail.title#">
+                            <input name="recipeName" type="text" value="#args.recipeDetail.name#">
                           </div>
                         </div>
                 </div>

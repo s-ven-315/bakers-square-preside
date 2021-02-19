@@ -11,12 +11,11 @@
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
-             <form id="delete-recipe-form" action="#event.buildLink(linkTo="page-types.recipe.delete")#" method="POST">
+             <form id="delete-recipe-form" action="#event.buildLink(linkTo="page-types.recipe_page.delete")#" method="POST">
                 <div class="modal-body">
-                        <p>Are you sure you want to delete this <strong style="text-transform:uppercase">#event.getPageProperty('title')#</strong> recipe?</p>
+                        <p>Are you sure you want to delete this <strong style="text-transform:uppercase">#args.recipeDetail.name#</strong> recipe?</p>
                         <div class="form-group">
-                            <input type="hidden" name="pageId" value="#event.getCurrentPageId()#">
-                            <input type="hidden" name="parentPageId" value="#event.getPageProperty("parent_page")#">
+                            <input type="hidden" name="recipeId" value="#args.recipeDetail.id#">
                         </div>
                     </div>
                     <div class="modal-footer">
