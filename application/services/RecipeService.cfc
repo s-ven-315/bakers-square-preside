@@ -188,11 +188,16 @@ component {
     }
 
     public function getLikedRecipe(
-        required string user
+        required string targetUserId
     ){
         return $getPresideObject('recipe_like_relationship').selectData(
-            filter = {
-                user = arguments.user
+            selectFields = [
+                'recipe.owner as userId'
+                , 'recipe.id as recipeId'
+                , 'recipe.name'
+            ]
+            , filter = {
+                user = arguments.targetUserId
                 , liked = true
             }
         )
