@@ -8,38 +8,38 @@
     </button>
     <div class="modal fade" id="editStepModal" tabindex="-1" role="dialog" aria-labelledby="editStepModalLabel" aria-hidden="true">
         <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="editStepModalLabel">Recipe Steps</h5>
-            </div>
-            <div class="modal-body">
-                <div class="step-list">
-                    <ol class="step-list-ol list-group">
-                        <cfloop index="i" from="1" to="#arrayLen(steps)#">
-                            <div>
-                                <button class="delete-listitem">Delete</button>
-                                <li class="list-group-item">#steps[i]# </li>
-                            </div>
-                        </cfloop>
-                    </ol>
-                </div>
-            </div>
-            <form id="edit-step-form" action="#event.buildLink(linkTo="page-types.recipe_page.updateSteps")#" method="POST">
-                <div class="modal-body">
-                        <div class="form-group">
-                          <input type="hidden" name="ownerId" value="#args.recipeDetail.owner#">
-                          <input type="hidden" value=#args.recipeDetail.id# name="recipeId">
-                          <input type="hidden" name="steps" class="step-submit">
-                          <input class="step-input" type="text" placeholder="Add Step">
-                          <button type="button" class="btn btn-primary add-more">Add</button>
-                        </div>
-                    </div>
-                <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary submit-btn">Save</button>
-                    <button type="button" class="btn btn-secondary reset-btn" data-dismiss="modal">Cancel</button>
-                </div>
-            </form>
-          </div>
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="editStepModalLabel">Recipe Steps</h5>
+				</div>
+				<div class="modal-body">
+					<div class="step-list">
+						<ol class="step-list-ol list-group">
+							<cfloop index="item" array="#steps#">
+								<div>
+									<button class="delete-listitem">Delete</button>
+									<li class="list-group-item">#item# </li>
+								</div>
+							</cfloop>
+						</ol>
+					</div>
+				</div>
+				<form id="edit-step-form" action="#event.buildLink( linkTo = "page-types.recipe_page.updateSteps" )#" method = "POST">
+					<div class="modal-body">
+						<div class="form-group">
+							<input type="hidden" name="ownerId" value="#args.recipeDetail.owner#">
+							<input type="hidden" value=#args.recipeDetail.id# name="recipeId">
+							<input type="hidden" name="steps" class="step-submit">
+							<input class="step-input" type="text" placeholder="Add Step">
+							<button type="button" class="btn btn-primary add-more">Add</button>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="submit" class="btn btn-primary submit-btn">Save</button>
+						<button type="button" class="btn btn-secondary reset-btn" data-dismiss="modal">Cancel</button>
+					</div>
+				</form>
+			</div>
         </div>
     </div>
     <script type="text/javascript" language="JavaScript">
