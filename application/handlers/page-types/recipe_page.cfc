@@ -144,7 +144,7 @@ component {
     public function delete( event, rc, prc, args = {} ) {
         var currentUserId = websiteLoginService.getLoggedInUserId() ?: "" ;
         
-        recipeService.deleteRecipe( id = rc.recipeId )
+        recipeService.deleteRecipe( recipeId = rc.recipeId )
 
         setNextEvent(
             url = event.buildLink( userId = currentUserId )
