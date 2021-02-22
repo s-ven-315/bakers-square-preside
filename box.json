@@ -9,6 +9,7 @@
         "presidecms":"^10.14.2+0008572"
     },
     "installPaths":{
-        "presidecms":"preside/"
+        "presidecms":"preside/",
+        "preside-ext-elasticsearch":"application/extensions/preside-ext-elasticsearch/"
     }
 }

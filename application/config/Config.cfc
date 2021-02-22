@@ -16,6 +16,10 @@ component extends="preside.system.config.Config" {
 		_setupCustomAdminNavigation();
 		_setupInterceptors();
 		_setupLogboxLoggers();
+		_setupNotificationTopics();
+
+		coldbox.requestContextDecorator = "app.decorators.RequestContextDecorator";
+
 	}
 
 	public void function local() {
@@ -39,7 +43,7 @@ component extends="preside.system.config.Config" {
 	}
 
 	private void function _setupCommonSettings() {
-		settings.preside_admin_path = "bakerssquare_admin";
+		settings.preside_admin_path = "admin";
 		settings.system_users       = "sysadmin";
 		settings.default_locale     = "en";
 		settings.default_log_name   = "bakerssquare";
@@ -159,5 +163,9 @@ component extends="preside.system.config.Config" {
 
 			// etc.
 		*/
+	}
+	private function _setupNotificationTopics(){
+		settings.notificationTopics = settings.notificationTopics ?: {};
+		settings.notificationTopics.append("newUserSignUp");
 	}
 }

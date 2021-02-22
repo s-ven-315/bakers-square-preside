@@ -1,0 +1,26 @@
+.carousel-inner {
+    display: flex;
+    justify-content: center;
+    height: 300px;
+    align-items: center;
+    width: 70%;
+    margin: auto;
+}
+.carousel-inner .item{
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    text-align: center;
+}
+.carousel-inner>.active, .carousel-inner>.next, .carousel-inner>.prev{
+    display: flex;
+}
+
+.carousel-control {
+    display: flex;
+    align-items: center;
+    padding: 15px;
+}
+.right.carousel-control span{
+    margin-left: auto;
+}
