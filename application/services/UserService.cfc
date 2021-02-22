@@ -36,7 +36,7 @@ component {
             ]
             , filter = {
                 following = arguments.targetUserId
-                , connected = 1
+                , connected = true
             }
         )
     }
@@ -51,7 +51,7 @@ component {
             ]
             , filter = {
                 follower = arguments.targetUserId
-                , connected = 1
+                , connected = true
             }
         )
     }
@@ -79,15 +79,15 @@ component {
                 data = {
                     follower = arguments.currentUserId
                     , following = arguments.targetUserId
-                    , connected = 1
+                    , connected = true
                 }
             )
         } else {
             // not following (to refollow)
-            if (relationship.connected EQ 0) {
+            if (relationship.connected EQ false) {
                 $getPresideObject("follower_relationship").updateData(
                     data = {
-                        connected = 1
+                        connected = true
                     }
                     , filter = "follower = :follower and following = :following"
                     , filterParams = {
@@ -96,11 +96,11 @@ component {
                     }
                 )
             }
-            else if (relationship.connected EQ 1) {
+            else if (relationship.connected EQ true) {
                 // already follow (to unfollow)
                 $getPresideObject("follower_relationship").updateData(
                     data = {
-                        connected = 0
+                        connected = false
                     }
                     , filter = "follower = :follower and following = :following"
                     , filterParams = {

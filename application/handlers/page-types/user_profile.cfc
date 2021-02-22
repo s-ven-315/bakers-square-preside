@@ -6,6 +6,10 @@ component {
 
     public function index(event, rc, prc, args={} ){
 		args.userId   = prc.userId ?: "";
+        if (args.userId == ""){
+            return event.setView( view="/page-types/user_profile/notFound");
+        }
+
         args.currentUserId = websiteLoginService.getLoggedInUserId() ?: "";
 		event.initializeDummyPresideSiteTreePage();
 
@@ -18,7 +22,8 @@ component {
         )
         args.follower = userService.getFollower(targetUserId = args.userId);
         args.following = userService.getFollowing(targetUserId=args.userId);
-        args.recipe = recipeService.getRecipe(targetUserId = args.userId)
+        args.recipe = recipeService.getRecipe(targetUserId = args.userId);
+        args.likedRecipe = recipeService.getLikedRecipe(targetUserId = args.userId);
         event.setView( view="/page-types/user_profile/index", args=args );
 
     }

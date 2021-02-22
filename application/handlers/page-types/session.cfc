@@ -4,7 +4,7 @@ component {
     private function index(event, rc, prc, args={} ){
 
         args.recipeDetail = recipeService.getDetail(
-            id = url.recipeId
+            recipeId = url.recipeId
         )
       
         return renderView(
