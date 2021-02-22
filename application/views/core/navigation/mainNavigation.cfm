@@ -4,7 +4,7 @@
 </cfscript>
 
 <cfoutput>
-    <cfif IsFeatureEnabled( "websiteusers" )>
+	<cfif IsFeatureEnabled( "websiteusers" )>
 		<cfif IsLoggedIn()>
 			<li class="nav-user">
 				<button class="dropdown-toggle" data-toggle="dropdown">#userProfile.login_id#</button>
