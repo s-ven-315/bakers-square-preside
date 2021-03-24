@@ -6,7 +6,8 @@
     "createPackageDirectory":false,
     "private":true,
     "dependencies":{
-        "presidecms":"^10.14.2+0008572"
+        "presidecms":"^10.14.2+0008572",
+        "preside-ext-elasticsearch":"^6.3.5.00168"
     },
     "installPaths":{
         "presidecms":"preside/",
